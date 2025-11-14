@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinamento Ploomes - CRM</title>
+    <!-- Inclusão do Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fonte Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        html {
+            /* Adiciona rolagem suave para os links de navegação rápida */
+            scroll-behavior: smooth;
+        }
+        /* Garante que o header da navegação rápida não sobreponha a âncora */
+        [id] {
+            scroll-margin-top: 120px; /* Ajuste este valor se a altura do header mudar */
+        }
+        /* Zoom effect on image hover (disabled when modal is open) */
+        body:not(.modal-open) img {
+            transition: transform 0.3s ease;
+        }
+        body:not(.modal-open) img:hover {
+            transform: scale(1.05);
+        }
+        /* Image Modal Styles */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+        }
+        .image-modal.show {
+            display: flex;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        .modal-content img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .close-modal {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            z-index: 1001;
+        }
+        .close-modal:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 antialiased">
+
+    <!-- Header Principal -->
+    <header class="bg-gray-800 shadow-md sticky top-0 z-50">
+        <!-- Barra de Título Principal -->
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center items-center h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl font-bold text-white">Treinamento Ploomes</h1>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Barra de Navegação Rápida (Dinâmica) -->
+        <nav id="quick-nav" class="bg-gray-700 shadow-inner hidden">
+            <div id="quick-nav-links" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-12 space-x-4 overflow-x-auto whitespace-nowrap">
+                <!-- Links de navegação rápida serão injetados aqui pelo JavaScript -->
+            </div>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-5xl mx-auto p-6 md:p-10">
+
+        <!-- Home Page Panel (com os cards) -->
+        <section id="panel-home" class="tab-panel">
+            <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Central de Treinamento</h2>
+
+            <!-- Barra de Busca -->
+            <div class="mb-12 max-w-2xl mx-auto">
+                <label for="search-bar" class="sr-only">Procurar tutorial</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input type="text" name="search-bar" id="search-bar" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Procurar um tutorial...">
+                </div>
+            </div>
+
+            <!-- Seção de Categoria: Cadastros Básicos -->
+            <div class="category-section">
+                <h3 class="category-header text-2xl font-semibold text-white mb-6 border-l-4 border-blue-500 pl-3">
+                    Cadastros Básicos
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1: Cadastrar Empresa -->
+                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-semibold text-white mb-3">Cadastrar Empresa (Escritório)</h3>
+                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Aprenda o passo a passo para registrar um novo escritório ou empresa na plataforma.</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 mt-auto">
+                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-empresa">
+                                Iniciar Tutorial &rarr;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Cadastrar Advogado -->
+                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-semibold text-white mb-3">Cadastrar Advogado (Pessoa)</h3>
+                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Veja como adicionar uma pessoa (advogado) e vinculá-la a um escritório já cadastrado.</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 mt-auto">
+                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-advogado">
+                                Iniciar Tutorial &rarr;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Editar Reclamante -->
+                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-semibold text-white mb-3">Editar Info. Reclamante</h3>
+                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Tutorial detalhado sobre como editar os campos principais de um reclamante, incluindo CPF e telefones.</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 mt-auto">
+                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-reclamante">
+                                Iniciar Tutorial &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Categoria: Recursos Avançados -->
+            <div class="category-section mt-12">
+                <h3 class="category-header text-2xl font-semibold text-white mb-6 border-l-4 border-blue-500 pl-3">
+                    Recursos Avançados
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Card 4: Criar Marcadores -->
+                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-semibold text-white mb-3">Criar Marcadores</h3>
+                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Aprenda a criar e gerenciar marcadores de negócios para organizar seu funil.</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 mt-auto">
+                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-marcadores">
+                                Iniciar Tutorial &rarr;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Criar Filtros -->
+                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-semibold text-white mb-3">Criar Filtros Avançados</h3>
+                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Crie filtros complexos para segmentar negócios, clientes e outras entidades na plataforma.</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 mt-auto">
+                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-filtros">
+                                Iniciar Tutorial &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Como Cadastrar uma Empresa (Escritório) -->
+        <section id="panel-empresa" class="tab-panel mb-16 hidden">
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
+                &larr; Voltar para a Central
+            </a>
+            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
+                Como Cadastrar uma Empresa (Escritório)
+            </h3>
+            
+            <div class="space-y-10">
+                <!-- Passo 1 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
+                        <h4 class="text-xl font-semibold text-white">Novo Cliente &rarr; Empresa</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            No menu lateral, navegue até a aba <strong>"Clientes"</strong>. Em seguida, clique no botão <strong>"Novo Cliente"</strong> (canto superior direito) e selecione a opção <strong>"Empresa"</strong>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cadastrar_empresa_passo_1.png" alt="Menu Clientes, Novo Cliente e Opção Empresa" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_empresa_passo_1.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 2 -->
+                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
+                        <h4 class="text-xl font-semibold text-white">Preenchimento dos Dados</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            No formulário de criação de escritório:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
+                            <li>Preencha os campos <strong>"Nome"</strong> e <strong>"Razão Social"</strong>.</li>
+                            <li>Selecione se é <strong>"Pessoa Física"</strong> (Sim ou Não). Se "Sim", preencha o <strong>CPF</strong>.</li>
+                            <li>No campo <strong>"Marcadores"</strong>, adicione o marcador <strong>"Escritório"</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cadastrar_empresa_passo_2.png" alt="Menu de criação de escritório com campos" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_empresa_passo_2.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 3 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
+                        <h4 class="text-xl font-semibold text-white">Confirmação</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Após preencher e salvar, você será redirecionado automaticamente para o perfil do escritório recém-criado.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cadastrar_empresa_passo_3.png" alt="Perfil do escritório criado" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_empresa_passo_3.png')">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Como Cadastrar um Advogado -->
+        <section id="panel-advogado" class="tab-panel mb-16 hidden">
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
+                &larr; Voltar para a Central
+            </a>
+            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
+                Como Cadastrar um Advogado (Pessoa)
+            </h3>
+            
+            <div class="space-y-10">
+                <!-- Passo 1 (Adv) -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
+                        <h4 class="text-xl font-semibold text-white">Acessar "Pessoas"</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Dentro do perfil do escritório (criado no tutorial anterior), localize e clique na aba <strong>"Pessoas"</strong>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cadastrar_advogado_passo_1.png" alt="Aba Pessoas no perfil do escritório" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_advogado_passo_1.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 2 (Adv) -->
+                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
+                        <h4 class="text-xl font-semibold text-white">Nova Pessoa</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Para adicionar um novo advogado, clique no botão azul <strong>"Nova pessoa"</strong>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cadastrar_advogado_passo_2.png" alt="Botão Nova pessoa" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_advogado_passo_2.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 3 (Adv) -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
+                        <h4 class="text-xl font-semibold text-white">Selecionar Marcador "Advogado"</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            No formulário "Nova pessoa", o primeiro passo é selecionar o marcador <strong>"Advogado"</strong>. Isso fará com que os campos corretos (como a OAB) apareçam.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cadastrar_advogado_passo_3.png" alt="Selecionar marcador Advogado" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_advogado_passo_3.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 4 (Adv) -->
+                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 4</span>
+                        <h4 class="text-xl font-semibold text-white">Preencher Dados do Advogado</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Após o marcador ser selecionado, preencha os campos <strong>"Nome"</strong> e <strong>"OAB"</strong>.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
+                            <li>A OAB deve seguir o formato <strong>UFXXXXX</strong> (ex: SP133996).</li>
+                            <li>O campo <strong>"Empresa"</strong> já estará corretamente preenchido com o escritório de origem.</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cadastrar_advogado_passo_4.png" alt="Preenchimento dos campos Nome e OAB" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_advogado_passo_4.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 5 (Adv) -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 5</span>
+                        <h4 class="text-xl font-semibold text-white">Confirmação e Vínculo</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Ao salvar, você será redirecionado ao perfil do advogado. Note que o campo <strong>"Empresa"</strong> (destacado) mostra o vínculo com o escritório, permitindo navegar de volta.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cadastrar_advogado_passo_5.png" alt="Perfil do advogado com link para a empresa" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_advogado_passo_5.png')">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Seção: Como Editar Informações do Reclamante -->
+        <section id="panel-reclamante" class="tab-panel mb-16 hidden">
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
+                &larr; Voltar para a Central
+            </a>
+            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
+                Como Editar Informações do Reclamante
+            </h3>
+            
+            <div class="space-y-10">
+                <!-- Passo 1 -->
+                <div id="rec-passo-1" data-nav-title="Acessar Edição" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
+                        <h4 class="text-xl font-semibold text-white">Acessar a Edição</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            No perfil do reclamante que deseja editar, clique no botão <strong>"Opções"</strong> (geralmente no canto superior) e, em seguida, selecione <strong>"Editar Cliente"</strong>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/editar_reclamante_1.png" alt="Botão Opções e Editar Cliente" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/editar_reclamante_1.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 2 -->
+                <div id="rec-passo-2" data-nav-title="Marcador e CPF" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
+                        <h4 class="text-xl font-semibold text-white">Marcador e CPF</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            No menu de edição, certifique-se de que o campo <strong>"Marcador"</strong> está preenchido com <strong>"Reclamante"</strong>.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed">
+                            Aproveite para preencher o campo <strong>"CPF"</strong>, caso ele esteja vazio.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/editar_reclamante_2.png" alt="Campo Marcador e CPF" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/editar_reclamante_2.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 3 -->
+                <div id="rec-passo-3" data-nav-title="Telefone (Máscara)" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
+                        <h4 class="text-xl font-semibold text-white">Selecionar Máscara de Telefone</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Na seção <strong>"Telefones"</strong>, clique no botão à esquerda do campo de número (geralmente um ícone de globo ou bandeira) e selecione a máscara de telefones do <strong>Brasil</strong>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/editar_reclamante_3.png" alt="Seleção de máscara de telefone" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/editar_reclamante_3.png')">
+                    </div>
+                </div>
+                
+                <!-- Passo 4 -->
+                <div id="rec-passo-4" data-nav-title="Telefone (Add/Rem)" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 4</span>
+                        <h4 class="text-xl font-semibold text-white">Adicionar ou Remover Telefones</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Preencha o campo com o <strong>DDD</strong> e o <strong>número</strong>.
+                        </p>
+                         <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
+                            <li>Para adicionar mais números, clique no ícone <strong>"+"</strong> ao lado do campo.</li>
+                            <li>Para remover números, clique no ícone <strong>"-"</strong> ao lado do campo correspondente.</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/editar_reclamante_4.png" alt="Botões de adicionar e remover telefone" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/editar_reclamante_4.png')">
+                    </div>
+                </div>
+                
+                <!-- Passo 5 -->
+                <div id="rec-passo-5" data-nav-title="Salvar" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 5</span>
+                        <h4 class="text-xl font-semibold text-white">Salvar Alterações</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Após realizar todas as mudanças, clique no botão <strong>"Salvar"</strong> no final do formulário para aplicar as edições.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Seção: Como Criar Marcadores -->
+        <section id="panel-marcadores" class="tab-panel mb-16 hidden">
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
+                &larr; Voltar para a Central
+            </a>
+            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
+                Como Criar e Gerenciar Marcadores
+            </h3>
+            
+            <div class="space-y-10">
+                <!-- Passo 1 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
+                        <h4 class="text-xl font-semibold text-white">Acessar Configuração de Marcadores</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Na tela de <strong>"Negócios"</strong> (visão de funil), clique no ícone de <strong>engrenagem (Menu)</strong> no canto superior direito. Em seguida, selecione <strong>"Configurar marcadores de negócios"</strong>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/marcadores_1.png" alt="Menu de configurar marcadores" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/marcadores_1.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 2 -->
+                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
+                        <h4 class="text-xl font-semibold text-white">Editar ou Criar Marcadores</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Neste menu, você pode editar marcadores existentes (mudar a cor ou o nome) clicando neles.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed">
+                            Para criar um novo, preencha os campos <strong>"Descrição"</strong> (nome) e <strong>"Cor"</strong> no topo do menu e clique em <strong>Adicionar</strong>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/marcadores_2.png" alt="Menu de criação de marcadores" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/marcadores_2.png')">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Como Criar Filtros Avançados -->
+        <section id="panel-filtros" class="tab-panel mb-16 hidden">
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
+                &larr; Voltar para a Central
+            </a>
+            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
+                Como Criar Filtros Avançados
+            </h3>
+            
+            <div class="space-y-10">
+                <!-- Passo 1 -->
+                <div id="fil-passo-1" data-nav-title="Novo Filtro" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
+                        <h4 class="text-xl font-semibold text-white">Acessar Menu de Filtros</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Na tela de <strong>"Negócios"</strong> (ou qualquer outra lista), clique em <strong>"Filtros"</strong>. Isso abrirá um menu com os filtros salvos e um botão <strong>"Novo Filtro"</strong>. Clique nele.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/filtro_1.png" alt="Botão Novo Filtro" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/filtro_1.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 2 -->
+                <div id="fil-passo-2" data-nav-title="Config. Inicial" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
+                        <h4 class="text-xl font-semibold text-white">Configuração Inicial e Visibilidade</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            No menu de criação, este guia foca na aba <strong>"Filtros Avançados"</strong>. Dê um nome ao seu filtro.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed">
+                            Para que todos na equipe possam usá-lo, clique em "Visível para: Apenas eu" e mude para <strong>"Um ou mais usuários"</strong> &rarr; <strong>"Todos da Empresa"</strong>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/filtro_2.png" alt="Menu de visibilidade do filtro" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/filtro_2.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 3 -->
+                <div id="fil-passo-3" data-nav-title="Adicionar Condições" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
+                        <h4 class="text-xl font-semibold text-white">Adicionar Condições (A Lógica)</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Na tabela, configure sua lógica:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
+                            <li><strong>Campo:</strong> O que você quer filtrar (ex: "Marcadores").</li>
+                            <li><strong>Operação:</strong> A lógica (ex: "Igual a" para incluir, ou "Diferente de" para excluir).</li>
+                            <li><strong>Valor:</strong> O valor específico (ex: o marcador "Escritório").</li>
+                        </ul>
+                        <p class="text-gray-300 leading-relaxed">Clique no ícone azul <strong>(+)</strong> para adicionar a condição.</p>
+                        
+                        <!-- Dica Especial (Estilo Novo) -->
+                        <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mt-6">
+                            <p class="text-gray-300 leading-relaxed"><strong class="text-white">Dica:</strong> Para filtrar por campos de outras entidades (ex: Reclamante), pesquise pelo campo "Cliente". Clique no botão "Cliente" que aparecer e o sistema mostrará todos os campos do Reclamante para você filtrar.</p>
+                        </div>
+
+                        <!-- Bloco de Guia em Vídeo (Estilo Limpo) -->
+                        <div class="mt-8">
+                            <h5 class="text-lg font-semibold text-white mb-3 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-blue-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                                Guia em Vídeo (Passo 3)
+                            </h5>
+                            <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                                Este passo é complexo. Assista ao vídeo curto abaixo mostrando o processo em detalhe.
+                            </p>
+                            <!-- Placeholder do Vídeo Embedado -->
+                            <div class="w-full overflow-hidden rounded-md">
+                                <!-- Substitua este 'src' pelo link embed do seu vídeo -->
+                                <iframe class="w-full aspect-video" 
+                                        src="https://www.youtube.com/embed/Yds5s-j9DTo" 
+                                        title="Video tutorial placeholder" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/filtro_3.png" alt="Tabela de condições do filtro" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/filtro_3.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 4 -->
+                <div id="fil-passo-4" data-nav-title="Filtros Complexos" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 4</span>
+                        <h4 class="text-xl font-semibold text-white">Filtros Complexos (E / OU)</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Para adicionar mais condições (ex: Marcador = "Escritório" E Cliente (Reclamante) CPF = "Preenchido"), basta repetir o Passo 3.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed">
+                            Você pode usar os botões <strong>"E"</strong> / <strong>"OU"</strong> para criar lógicas mais complexas.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/filtro_4.png" alt="Lógica E/OU dos filtros" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/filtro_4.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 5 -->
+                <div id="fil-passo-5" data-nav-title="Aplicar ou Salvar" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 5</span>
+                        <h4 class="text-xl font-semibold text-white">Aplicar ou Salvar</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Com o filtro pronto, você tem duas opções:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
+                            <li><strong>Aplicar:</strong> Usa o filtro imediatamente, mas não o salva.</li>
+                            <li><strong>Salvar:</strong> Salva o filtro na sua lista para ser reutilizado no futuro.</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/filtro_5.png" alt="Botões Aplicar e Salvar" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/filtro_5.png')">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 mt-16">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-gray-300 text-sm mb-4">
+                    Deseja tirar dúvidas sobre a Ploomes ou fazer alguma sugestão sobre a página?
+                </p>
+                <a href="mailto:sferreira@btcreditos.com" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition duration-200">
+                    Enviar Email
+                </a>
+            </div>
+            <div class="mt-6 border-t border-gray-700 pt-4">
+                <p class="text-center text-gray-500 text-sm">
+                    &copy; 2025 - Repositório de Treinamento Interno
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript para funcionalidade das Abas, Navegação Rápida e Busca -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seletores
+            const panelTriggers = document.querySelectorAll('.panel-trigger');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            const quickNav = document.getElementById('quick-nav');
+            const quickNavLinks = document.getElementById('quick-nav-links');
+            const searchBar = document.getElementById('search-bar');
+            const tutorialCards = document.querySelectorAll('.tutorial-card');
+            const categorySections = document.querySelectorAll('.category-section');
+
+            // Função de Navegação dos Painéis (Abas)
+            panelTriggers.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault(); // Impede o comportamento padrão do link
+                    
+                    const targetId = button.getAttribute('data-target');
+                    const targetPanel = document.getElementById(targetId);
+
+                    // Oculta todos os painéis
+                    tabPanels.forEach(panel => {
+                        panel.classList.add('hidden');
+                    });
+                    
+                    // Limpa e oculta a navegação rápida
+                    quickNavLinks.innerHTML = '';
+                    quickNav.classList.add('hidden');
+
+                    if (targetPanel) {
+                        // Mostra o painel de conteúdo alvo
+                        targetPanel.classList.remove('hidden');
+                        
+                        // Salva o painel ativo no localStorage
+                        localStorage.setItem('activePanel', targetId);
+
+                        // Procura por etapas de navegação rápida dentro do painel alvo
+                        const quickSteps = targetPanel.querySelectorAll('[data-nav-title]');
+
+                        if (quickSteps.length > 0) {
+                            // Se encontrar etapas, constrói os links
+                            quickSteps.forEach(step => {
+                                const title = step.getAttribute('data-nav-title');
+                                const stepId = step.getAttribute('id');
+                                
+                                const link = document.createElement('a');
+                                link.href = `#${stepId}`;
+                                link.textContent = title;
+                                link.className = "text-sm text-gray-200 hover:text-white px-3 py-2 rounded-md font-medium hover:bg-gray-600 transition-colors";
+                                
+                                quickNavLinks.appendChild(link);
+                            });
+                            // Mostra a barra de navegação rápida
+                            quickNav.classList.remove('hidden');
+                        }
+                    }
+                    
+                    // Rola para o topo da página (útil ao mudar de painel)
+                    window.scrollTo(0, 0);
+                });
+            });
+
+            // Verifica se há um painel salvo no localStorage e o ativa
+            const savedPanel = localStorage.getItem('activePanel');
+            if (savedPanel) {
+                const savedPanelElement = document.getElementById(savedPanel);
+                if (savedPanelElement) {
+                    // Oculta todos os painéis primeiro
+                    tabPanels.forEach(panel => {
+                        panel.classList.add('hidden');
+                    });
+                    
+                    // Mostra o painel salvo
+                    savedPanelElement.classList.remove('hidden');
+                    
+                    // Limpa e oculta a navegação rápida
+                    quickNavLinks.innerHTML = '';
+                    quickNav.classList.add('hidden');
+                    
+                    // Procura por etapas de navegação rápida dentro do painel salvo
+                    const quickSteps = savedPanelElement.querySelectorAll('[data-nav-title]');
+                    if (quickSteps.length > 0) {
+                        quickSteps.forEach(step => {
+                            const title = step.getAttribute('data-nav-title');
+                            const stepId = step.getAttribute('id');
+                            
+                            const link = document.createElement('a');
+                            link.href = `#${stepId}`;
+                            link.textContent = title;
+                            link.className = "text-sm text-gray-200 hover:text-white px-3 py-2 rounded-md font-medium hover:bg-gray-600 transition-colors";
+                            
+                            quickNavLinks.appendChild(link);
+                        });
+                        quickNav.classList.remove('hidden');
+                    }
+                }
+            }
+
+            // Função de Busca
+            if (searchBar) {
+                searchBar.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+
+                    // 1. Filtrar os cards
+                    tutorialCards.forEach(card => {
+                        const title = card.querySelector('h3').textContent.toLowerCase();
+                        const description = card.querySelector('p').textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+
+                    // 2. Filtrar as seções de categoria
+                    categorySections.forEach(section => {
+                        // Verifica se existe algum card visível dentro desta seção
+                        const visibleCards = section.querySelectorAll('.tutorial-card:not(.hidden)');
+                        
+                        if (visibleCards.length > 0) {
+                            section.classList.remove('hidden'); // Mostra a seção (e seu título)
+                        } else {
+                            section.classList.add('hidden'); // Esconde a seção inteira
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal" onclick="closeImageModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Modal Image">
+        </div>
+    </div>
+
+    <script>
+        // Image Modal Functions
+        function openImageModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = imageSrc;
+            modal.classList.add('show');
+            document.body.classList.add('modal-open');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('show');
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside the image
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+    </script>
+
+</body>
+</html>
