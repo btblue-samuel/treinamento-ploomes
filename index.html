@@ -199,6 +199,19 @@
                             </a>
                         </div>
                     </div>
+
+                    <!-- Card 6: Cadastrar Leads B2B (Importação) -->
+                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-semibold text-white mb-3">Cadastrar Leads B2B (Importação)</h3>
+                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Aprenda a importar leads B2B em massa usando uma planilha Excel no funil de negócios.</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 mt-auto">
+                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-leads">
+                                Iniciar Tutorial &rarr;
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -605,24 +618,107 @@
             </div>
         </section>
 
+        <!-- Seção: Como Cadastrar Leads B2B (Importação) -->
+        <section id="panel-leads" class="tab-panel mb-16 hidden">
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
+                &larr; Voltar para a Central
+            </a>
+            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
+                Como Cadastrar Leads B2B (Importação)
+            </h3>
+            
+            <div class="space-y-10">
+                <!-- Passo 1 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
+                        <h4 class="text-xl font-semibold text-white">Acessar Negócios e Selecionar Funil</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            No menu lateral, navegue até <strong>"Negócios"</strong>. Em seguida, selecione o funil que deseja fazer as importações.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/leads_passo_1.png" alt="Menu lateral Negócios e seleção de funil" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_passo_1.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 2 -->
+                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
+                        <h4 class="text-xl font-semibold text-white">Acessar Importação pelo Excel</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Na tela do <strong>"Funil"</strong>, clique no ícone de engrenagem (Menu) no canto superior direito. Em seguida, selecione <strong>"Importar negócios pelo Excel"</strong>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/leads_passo_2.png" alt="Ícone de engrenagem e opção Importar negócios pelo Excel" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_passo_2.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 3 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
+                        <h4 class="text-xl font-semibold text-white">Fazer Upload da Planilha</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            No menu de importação, clique em <strong>"Fazer upload da planilha"</strong> e selecione a planilha que deseja fazer a importação.
+                        </p>
+                        <!-- Dica Especial -->
+                        <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mt-6">
+                            <p class="text-gray-300 leading-relaxed mb-4"><strong class="text-white">Dica:</strong> Use esse modelo de planilha, preenchendo com as informações necessárias.</p>
+                            <a href="res/modelo_leads_b2b.xlsx" download class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm inline-block">
+                                Baixar Modelo de Planilha
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/leads_passo_3.png" alt="Botão Fazer upload da planilha" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_passo_3.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 4 -->
+                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 4</span>
+                        <h4 class="text-xl font-semibold text-white">Mapear os Campos</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Em seguida, você deverá mapear os campos da planilha para os campos que a Ploomes entenda. Para isso, basta clicar na caixa como na imagem e selecionar os campos para serem mapeados.
+                        </p>
+                        <!-- Dica Especial -->
+                        <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mt-6">
+                            <p class="text-gray-300 leading-relaxed"><strong class="text-white">Dica:</strong> Preencha o campo Responsável com o seu nome de usuário da Ploomes.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/leads_passo_4.png" alt="Mapeamento dos campos da planilha" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_passo_4.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 5 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 5</span>
+                        <h4 class="text-xl font-semibold text-white">Confirmar e Finalizar Importação</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Após mapear todos os campos, clique em <strong>"Confirmar"</strong>, e aparecerá uma tela de progresso da importação. Após finalizar, clique em <strong>"Finalizar Importação"</strong>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/leads_passo_5.png" alt="Tela de progresso e botão Finalizar Importação" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_passo_5.png')">
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
     <footer class="bg-gray-800 mt-16">
-        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <p class="text-gray-300 text-sm mb-4">
-                    Deseja tirar dúvidas sobre a Ploomes ou fazer alguma sugestão sobre a página?
-                </p>
-                <a href="mailto:sferreira@btcreditos.com" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition duration-200">
-                    Enviar Email
-                </a>
-            </div>
-            <div class="mt-6 border-t border-gray-700 pt-4">
-                <p class="text-center text-gray-500 text-sm">
-                    &copy; 2025 - Repositório de Treinamento Interno
-                </p>
-            </div>
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-500 text-sm">
+                &copy; 2025 - Repositório de Treinamento Interno
+            </p>
         </div>
     </footer>
 
