@@ -165,6 +165,19 @@
                             </a>
                         </div>
                     </div>
+
+                    <!-- Card 4: Escritórios e Advogados no Padrão CNA/CNSA -->
+                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-semibold text-white mb-3">Escritórios e Advogados no Padrão CNA/CNSA</h3>
+                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Aprenda a consultar e verificar escritórios e advogados no padrão CNA/CNSA para cadastros precisos.</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 mt-auto">
+                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-cna">
+                                Iniciar Tutorial &rarr;
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -471,6 +484,64 @@
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Seção: Escritórios e Advogados no Padrão CNA/CNSA -->
+        <section id="panel-cna" class="tab-panel mb-16 hidden">
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
+                &larr; Voltar para a Central
+            </a>
+            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
+                Escritórios e Advogados no Padrão CNA/CNSA
+            </h3>
+            
+            <div class="space-y-10">
+                <!-- Passo 1 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
+                        <h4 class="text-xl font-semibold text-white">Acessar o Site do CNSA</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Para encontrar um escritório, acesse o site do <a href="https://cnsa.oab.org.br" target="_blank" class="text-blue-400 hover:text-blue-300">CNSA</a>.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cnsa_passo_1.png" alt="Site do CNSA" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cnsa_passo_1.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 2 -->
+                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
+                        <h4 class="text-xl font-semibold text-white">Realizar a Consulta</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Preencha os campos de nome e complete a verificação "Não sou um robô". Ao fazer a consulta, a página mostrará os resultados.
+                        </p>
+                        <!-- Dica Especial -->
+                        <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mt-6">
+                            <p class="text-gray-300 leading-relaxed"><strong class="text-white">Dica:</strong> Para encontrar o CNPJ do escritório para cadastro na Ploomes, use o <a href="https://empresadois.com.br/cnpj" target="_blank" class="text-blue-400 hover:text-blue-300">Empresa Dois</a> ou o <a href="https://www.google.com" target="_blank" class="text-blue-400 hover:text-blue-300">Google</a>.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cnsa_passo_2.png" alt="Consulta no CNSA" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cnsa_passo_2.png')">
+                    </div>
+                </div>
+
+                <!-- Passo 3 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div class="md:w-1/2 space-y-3">
+                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
+                        <h4 class="text-xl font-semibold text-white">Verificar Advogados Associados</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Ao clicar no resultado do escritório, a página mostrará os advogados associados. Clicando no nome de um advogado, você será redirecionado ao perfil no <a href="https://cna.oab.org.br" target="_blank" class="text-blue-400 hover:text-blue-300">CNA</a>, onde pode consultar a OAB.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/cnsa_passo_3.png" alt="Perfil do advogado no CNA" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cnsa_passo_3.png')">
+                    </div>
+                </div>
             </div>
         </section>
 
