@@ -2455,9 +2455,17 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 mt-16">
-        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-500 text-sm">
+    <footer id="main-footer" class="bg-gradient-to-r from-slate-800 to-slate-900 text-white py-4 mt-8 border-t border-slate-700">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h3 class="text-lg font-semibold mb-2 gradient-text">Dúvidas ou Sugestões?</h3>
+            <p class="text-slate-300 mb-4 text-sm">Para perguntas diretas e sugestões sobre o treinamento, entre em contato:</p>
+            <button onclick="window.location.href='mailto:sferreira@btcreditos.com'"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                Enviar Email
+            </button>
+        </div>
+        <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8 mt-4">
+            <p class="text-center text-gray-400 text-sm">
                 &copy; 2025 - Repositório de Treinamento Interno
             </p>
         </div>
@@ -2563,6 +2571,7 @@
 
             // Floating Back Button Logic
             const floatingButtons = document.querySelectorAll('.floating-back-btn');
+            const footer = document.getElementById('main-footer');
             let scrollTimeout;
 
             window.addEventListener('scroll', () => {
@@ -2570,13 +2579,20 @@
                 clearTimeout(scrollTimeout);
                 scrollTimeout = setTimeout(() => {
                     const scrollPosition = window.scrollY;
-                    const shouldShow = scrollPosition > 300;
+                    const footerRect = footer.getBoundingClientRect();
+                    const isFooterInView = footerRect.top < window.innerHeight && footerRect.bottom > 0;
+                    const shouldShow = scrollPosition > 300 && !isFooterInView;
 
                     floatingButtons.forEach(btn => {
                         // Only show button if its parent panel is visible
                         const parentPanel = btn.closest('.tab-panel');
                         if (parentPanel && !parentPanel.classList.contains('hidden')) {
                             if (shouldShow) {
+                                if (isFooterInView) {
+                                    btn.style.bottom = `${footerRect.height + 32}px`; // Move above footer
+                                } else {
+                                    btn.style.bottom = '2rem';
+                                }
                                 btn.classList.add('visible');
                             } else {
                                 btn.classList.remove('visible');
