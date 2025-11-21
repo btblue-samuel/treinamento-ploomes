@@ -7,26 +7,136 @@
     <!-- Inclusão do Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Fonte Inter */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        /* Fonte Inter - Modern weights */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        /* Root Variables - Enhanced Color Palette */
+        :root {
+            --color-primary: #3b82f6;
+            --color-primary-dark: #2563eb;
+            --color-primary-light: #60a5fa;
+            --color-secondary: #8b5cf6;
+            --color-accent: #06b6d4;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --bg-dark: #0f172a;
+            --bg-darker: #020617;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+            min-height: 100vh;
         }
+        
         html {
-            /* Adiciona rolagem suave para os links de navegação rápida */
             scroll-behavior: smooth;
         }
-        /* Garante que o header da navegação rápida não sobreponha a âncora */
+        
+        /* Scroll Offset for Fixed Header */
         [id] {
-            scroll-margin-top: 120px; /* Ajuste este valor se a altura do header mudar */
+            scroll-margin-top: 130px;
         }
-        /* Zoom effect on image hover (disabled when modal is open) */
+        
+        /* Enhanced Image Hover Effects */
         body:not(.modal-open) img {
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(0.95);
         }
         body:not(.modal-open) img:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) translateY(-4px);
+            filter: brightness(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
+        
+        /* Card Animations */
+        .tutorial-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--color-primary);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+        
+        /* Button Enhancements */
+        .panel-trigger {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .panel-trigger::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .panel-trigger:hover::before {
+            left: 100%;
+        }
+        
+        /* Gradient Headers */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Step Badge Animations */
+        .step-badge {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .step-badge::after {
+            content: '→';
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateX(-10px);
+        }
+        .step-badge:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Enhanced Category Headers */
+        .category-header {
+            position: relative;
+            padding-left: 1rem;
+        }
+        .category-header::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
+            border-radius: 2px;
+        }
+        
+        /* Search Bar Enhancement */
+        #search-bar {
+            transition: all 0.3s ease;
+        }
+        #search-bar:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+        
         /* Image Modal Styles */
         .image-modal {
             display: none;
@@ -36,145 +146,274 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(10px);
         }
         .image-modal.show {
             display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .modal-content {
             max-width: 90%;
             max-height: 90%;
             position: relative;
+            animation: zoomIn 0.3s ease;
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
         .modal-content img {
             width: auto;
             height: auto;
             max-width: 100%;
             max-height: 100%;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
         }
         .close-modal {
             position: fixed;
             top: 20px;
-            left: 20px;
+            right: 20px;
             color: white;
-            font-size: 30px;
+            font-size: 32px;
             font-weight: bold;
             cursor: pointer;
-            background: rgba(0, 0, 0, 0.7);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
             z-index: 1001;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         .close-modal:hover {
-            background: rgba(0, 0, 0, 0.8);
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Loading Animation for Images */
+        img {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        img[src] {
+            animation: none;
+            background: none;
+        }
+        
+        /* Floating Back Button */
+        .floating-back-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 40;
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .floating-back-btn.visible {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+        .floating-back-btn:hover {
+            transform: translateX(0) scale(1.05);
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 antialiased">
+<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 antialiased min-h-screen">
 
     <!-- Header Principal -->
-    <header class="bg-gray-800 shadow-md sticky top-0 z-50">
+    <header class="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 shadow-2xl sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
         <!-- Barra de Título Principal -->
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-center items-center h-16">
+            <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0">
-                    <h1 class="text-2xl font-bold text-white">Treinamento Ploomes</h1>
+                    <h1 class="text-3xl font-bold gradient-text flex items-center gap-3">
+                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        Treinamento Ploomes
+                    </h1>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <span class="text-sm text-gray-400">Plataforma CRM</span>
                 </div>
             </div>
         </nav>
         
         <!-- Barra de Navegação Rápida (Dinâmica) -->
-        <nav id="quick-nav" class="bg-gray-700 shadow-inner hidden">
-            <div id="quick-nav-links" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-12 space-x-4 overflow-x-auto whitespace-nowrap">
+        <nav id="quick-nav" class="bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 shadow-inner border-t border-slate-600 hidden">
+            <div id="quick-nav-links" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-14 space-x-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
                 <!-- Links de navegação rápida serão injetados aqui pelo JavaScript -->
             </div>
         </nav>
     </header>
 
     <!-- Conteúdo Principal -->
-    <main class="max-w-5xl mx-auto p-6 md:p-10">
+    <main class="max-w-7xl mx-auto p-6 md:p-12">
 
         <!-- Home Page Panel (com os cards) -->
         <section id="panel-home" class="tab-panel">
-            <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Central de Treinamento</h2>
+            <!-- Hero Section -->
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-extrabold gradient-text mb-4">Central de Treinamento</h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    Domine o Ploomes CRM com tutoriais práticos e objetivos
+                </p>
+            </div>
 
-            <!-- Barra de Busca -->
-            <div class="mb-12 max-w-2xl mx-auto">
+            <!-- Barra de Busca Aprimorada -->
+            <div class="mb-16 max-w-3xl mx-auto">
                 <label for="search-bar" class="sr-only">Procurar tutorial</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="w-6 h-6 text-blue-400 group-focus-within:text-blue-300 transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                         </svg>
                     </div>
-                    <input type="text" name="search-bar" id="search-bar" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Procurar um tutorial...">
+                    <input 
+                        type="text" 
+                        name="search-bar" 
+                        id="search-bar" 
+                        class="bg-slate-800 border-2 border-slate-600 text-white text-lg rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full pl-14 pr-4 py-4 transition-all placeholder-gray-500" 
+                        placeholder="Buscar por tutoriais, cadastros, filtros...">
                 </div>
             </div>
 
             <!-- Seção de Categoria: Cadastros Básicos -->
-            <div class="category-section">
-                <h3 class="category-header text-2xl font-semibold text-white mb-6 border-l-4 border-blue-500 pl-3">
-                    Cadastros Básicos
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="category-section mb-16">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="category-header text-3xl font-bold text-white flex items-center gap-3">
+                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        Cadastros Básicos
+                    </h3>
+                    <span class="text-sm text-gray-400 hidden md:block">Fundamentos essenciais</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
                     <!-- Card 1: Cadastrar Empresa -->
-                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <div class="tutorial-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-blue-500">
                         <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-3">Cadastrar Empresa (Escritório)</h3>
-                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Aprenda o passo a passo para registrar um novo escritório ou empresa na plataforma.</p>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-blue-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    </svg>
+                                </div>
+                                <span class="px-3 py-1 bg-blue-500 bg-opacity-20 text-blue-300 text-xs font-semibold rounded-full">Essencial</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Cadastrar Empresa (Escritório)</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Aprenda o processo completo para registrar um novo escritório ou empresa na plataforma Ploomes.</p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                3 passos
+                            </div>
                         </div>
-                        <div class="bg-gray-700 p-4 mt-auto">
-                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-empresa">
-                                Iniciar Tutorial &rarr;
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="#" class="panel-trigger bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full text-center inline-block transition-all duration-300 shadow-lg hover:shadow-blue-500/50" data-target="panel-empresa">
+                                Iniciar Tutorial →
                             </a>
                         </div>
                     </div>
 
                     <!-- Card 2: Cadastrar Advogado -->
-                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <div class="tutorial-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-blue-500">
                         <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-3">Cadastrar Advogado (Pessoa)</h3>
-                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Veja como adicionar uma pessoa (advogado) e vinculá-la a um escritório já cadastrado.</p>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-purple-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                <span class="px-3 py-1 bg-purple-500 bg-opacity-20 text-purple-300 text-xs font-semibold rounded-full">Essencial</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Cadastrar Advogado (Pessoa)</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Descubra como adicionar uma pessoa (advogado) e vinculá-la a um escritório já cadastrado no sistema.</p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                5 passos
+                            </div>
                         </div>
-                        <div class="bg-gray-700 p-4 mt-auto">
-                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-advogado">
-                                Iniciar Tutorial &rarr;
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="#" class="panel-trigger bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full text-center inline-block transition-all duration-300 shadow-lg hover:shadow-purple-500/50" data-target="panel-advogado">
+                                Iniciar Tutorial →
                             </a>
                         </div>
                     </div>
 
                     <!-- Card 3: Editar Reclamante -->
-                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <div class="tutorial-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-blue-500">
                         <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-3">Editar Info. Reclamante</h3>
-                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Tutorial detalhado sobre como editar os campos principais de um reclamante, incluindo CPF e telefones.</p>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-cyan-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </div>
+                                <span class="px-3 py-1 bg-cyan-500 bg-opacity-20 text-cyan-300 text-xs font-semibold rounded-full">Importante</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Editar Info. Reclamante</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Tutorial completo sobre como editar e atualizar os campos principais de um reclamante, incluindo CPF e telefones.</p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                5 passos
+                            </div>
                         </div>
-                        <div class="bg-gray-700 p-4 mt-auto">
-                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-reclamante">
-                                Iniciar Tutorial &rarr;
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="#" class="panel-trigger bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full text-center inline-block transition-all duration-300 shadow-lg hover:shadow-cyan-500/50" data-target="panel-reclamante">
+                                Iniciar Tutorial →
                             </a>
                         </div>
                     </div>
 
                     <!-- Card 4: Escritórios e Advogados no Padrão CNA/CNSA -->
-                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <div class="tutorial-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-blue-500">
                         <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-3">Escritórios e Advogados no Padrão CNA/CNSA</h3>
-                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Aprenda a consultar e verificar escritórios e advogados no padrão CNA/CNSA para cadastros precisos.</p>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-emerald-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="px-3 py-1 bg-emerald-500 bg-opacity-20 text-emerald-300 text-xs font-semibold rounded-full">Verificação</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Escritórios e Advogados no Padrão CNA/CNSA</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Aprenda a consultar e verificar escritórios e advogados no padrão CNA/CNSA para cadastros precisos.</p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Tutorial
+                            </div>
                         </div>
-                        <div class="bg-gray-700 p-4 mt-auto">
-                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-cna">
-                                Iniciar Tutorial &rarr;
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="#" class="panel-trigger bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full text-center inline-block transition-all duration-300 shadow-lg hover:shadow-emerald-500/50" data-target="panel-cna">
+                                Iniciar Tutorial →
                             </a>
                         </div>
                     </div>
@@ -182,34 +421,68 @@
             </div>
 
             <!-- Seção de Categoria: Cadastros B2B -->
-            <div class="category-section mt-12">
-                <h3 class="category-header text-2xl font-semibold text-white mb-6 border-l-4 border-blue-500 pl-3">
-                    Cadastros B2B
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="category-section mb-16">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="category-header text-3xl font-bold text-white flex items-center gap-3">
+                        <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        Cadastros B2B
+                    </h3>
+                    <span class="text-sm text-gray-400 hidden md:block">Gestão comercial</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
                     <!-- Card 6: Cadastrar Leads B2B (Importação) -->
-                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <div class="tutorial-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-indigo-500">
                         <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-3">Cadastrar Leads B2B (Importação)</h3>
-                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Aprenda a importar leads B2B em massa usando uma planilha Excel no funil de negócios.</p>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-indigo-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                    </svg>
+                                </div>
+                                <span class="px-3 py-1 bg-indigo-500 bg-opacity-20 text-indigo-300 text-xs font-semibold rounded-full">Importação</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Cadastrar Leads B2B (Importação)</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Aprenda a importar múltiplos leads B2B em massa usando uma planilha Excel diretamente no funil de negócios.</p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Tutorial
+                            </div>
                         </div>
-                        <div class="bg-gray-700 p-4 mt-auto">
-                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-leads">
-                                Iniciar Tutorial &rarr;
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="#" class="panel-trigger bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full text-center inline-block transition-all duration-300 shadow-lg hover:shadow-indigo-500/50" data-target="panel-leads">
+                                Iniciar Tutorial →
                             </a>
                         </div>
                     </div>
 
                     <!-- Card 7: Cadastrar Leads B2B (Manual) -->
-                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <div class="tutorial-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-indigo-500">
                         <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-3">Cadastrar Leads B2B (Manual)</h3>
-                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Aprenda a cadastrar leads B2B manualmente no funil de negócios.</p>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-violet-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                </div>
+                                <span class="px-3 py-1 bg-violet-500 bg-opacity-20 text-violet-300 text-xs font-semibold rounded-full">Manual</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Cadastrar Leads B2B (Manual)</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Aprenda a cadastrar leads B2B manualmente, um a um, no funil de negócios do Ploomes.</p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Tutorial
+                            </div>
                         </div>
-                        <div class="bg-gray-700 p-4 mt-auto">
-                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-leads-manual">
-                                Iniciar Tutorial &rarr;
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="#" class="panel-trigger bg-gradient-to-r from-violet-500 to-violet-600 hover:from-violet-600 hover:to-violet-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full text-center inline-block transition-all duration-300 shadow-lg hover:shadow-violet-500/50" data-target="panel-leads-manual">
+                                Iniciar Tutorial →
                             </a>
                         </div>
                     </div>
@@ -217,33 +490,67 @@
             </div>
 
             <!-- Seção de Categoria: Recursos Avançados -->
-            <div class="category-section mt-12">
-                <h3 class="category-header text-2xl font-semibold text-white mb-6 border-l-4 border-blue-500 pl-3">
-                    Recursos Avançados
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Card 4: Criar Marcadores -->
-                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+            <div class="category-section mb-16">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="category-header text-3xl font-bold text-white flex items-center gap-3">
+                        <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        Recursos Avançados
+                    </h3>
+                    <span class="text-sm text-gray-400 hidden md:block">Otimize seu fluxo</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Card: Criar Marcadores -->
+                    <div class="tutorial-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-amber-500">
                         <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-3">Criar Marcadores</h3>
-                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Aprenda a criar e gerenciar marcadores de negócios para organizar seu funil.</p>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-amber-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                                    </svg>
+                                </div>
+                                <span class="px-3 py-1 bg-amber-500 bg-opacity-20 text-amber-300 text-xs font-semibold rounded-full">Organização</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Criar Marcadores</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Aprenda a criar e gerenciar marcadores personalizados de negócios para organizar e segmentar seu funil de vendas.</p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                2 passos
+                            </div>
                         </div>
-                        <div class="bg-gray-700 p-4 mt-auto">
-                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-marcadores">
-                                Iniciar Tutorial &rarr;
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="#" class="panel-trigger bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full text-center inline-block transition-all duration-300 shadow-lg hover:shadow-amber-500/50" data-target="panel-marcadores">
+                                Iniciar Tutorial →
                             </a>
                         </div>
                     </div>
 
-                    <!-- Card 5: Criar Filtros -->
-                    <div class="tutorial-card bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <!-- Card: Criar Filtros -->
+                    <div class="tutorial-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-rose-500">
                         <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-3">Criar Filtros Avançados</h3>
-                            <p class="text-gray-300 text-sm mb-6 leading-relaxed">Crie filtros complexos para segmentar negócios, clientes e outras entidades na plataforma.</p>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-rose-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-6 h-6 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                                    </svg>
+                                </div>
+                                <span class="px-3 py-1 bg-rose-500 bg-opacity-20 text-rose-300 text-xs font-semibold rounded-full">Avançado</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Criar Filtros Avançados</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Crie filtros complexos e personalizados para segmentar negócios, clientes e outras entidades na plataforma.</p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                5 passos
+                            </div>
                         </div>
-                        <div class="bg-gray-700 p-4 mt-auto">
-                            <a href="#" class="panel-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm w-full text-center inline-block transition duration-200" data-target="panel-filtros">
-                                Iniciar Tutorial &rarr;
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="#" class="panel-trigger bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full text-center inline-block transition-all duration-300 shadow-lg hover:shadow-rose-500/50" data-target="panel-filtros">
+                                Iniciar Tutorial →
                             </a>
                         </div>
                     </div>
@@ -256,58 +563,127 @@
 
         <!-- Seção: Como Cadastrar uma Empresa (Escritório) -->
         <section id="panel-empresa" class="tab-panel mb-16 hidden">
-            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
-                &larr; Voltar para a Central
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-8 inline-flex items-center gap-2 text-lg font-medium transition-all hover:gap-3" data-target="panel-home">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Voltar para a Central
             </a>
-            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
-                Como Cadastrar uma Empresa (Escritório)
-            </h3>
             
-            <div class="space-y-10">
+            <div class="mb-10">
+                <h3 class="text-4xl font-bold text-white mb-4 flex items-center gap-3">
+                    <svg class="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                    Como Cadastrar uma Empresa (Escritório)
+                </h3>
+                <p class="text-xl text-gray-400">Siga este guia passo a passo para registrar um novo escritório no Ploomes.</p>
+            </div>
+            
+            <div class="space-y-8">
                 <!-- Passo 1 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
-                        <h4 class="text-xl font-semibold text-white">Novo Cliente &rarr; Empresa</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            No menu lateral, navegue até a aba <strong>"Clientes"</strong>. Em seguida, clique no botão <strong>"Novo Cliente"</strong> (canto superior direito) e selecione a opção <strong>"Empresa"</strong>.
-                        </p>
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-blue-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 1</span>
+                            <span class="text-xs text-gray-400">Navegação inicial</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Acessar Novo Cliente → Empresa</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para começar o cadastro de um novo escritório:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>No <strong class="text-white">menu lateral</strong>, localize e clique na seção <strong class="text-blue-400">"Clientes"</strong></li>
+                                <li>No canto <strong class="text-white">superior direito</strong>, clique no botão <strong class="text-blue-400">"Novo Cliente"</strong></li>
+                                <li>Selecione a opção <strong class="text-blue-400">"Empresa"</strong> no menu que aparecer</li>
+                            </ol>
+                        </div>
+                        <div class="bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-blue-200"><strong>💡 Dica:</strong> A opção "Empresa" é usada especificamente para cadastrar escritórios de advocacia.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cadastrar_empresa_passo_1.png" alt="Menu Clientes, Novo Cliente e Opção Empresa" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_empresa_passo_1.png')">
+                        <img src="img/cadastrar_empresa_passo_1.png" alt="Menu Clientes, Novo Cliente e Opção Empresa" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cadastrar_empresa_passo_1.png')">
                     </div>
                 </div>
 
                 <!-- Passo 2 -->
-                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
-                        <h4 class="text-xl font-semibold text-white">Preenchimento dos Dados</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            No formulário de criação de escritório:
-                        </p>
-                        <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
-                            <li>Preencha os campos <strong>"Nome"</strong> e <strong>"Razão Social"</strong>.</li>
-                            <li>Selecione se é <strong>"Pessoa Física"</strong> (Sim ou Não). Se "Sim", preencha o <strong>CPF</strong>.</li>
-                            <li>No campo <strong>"Marcadores"</strong>, adicione o marcador <strong>"Escritório"</strong>.</li>
-                        </ul>
+                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-blue-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 2</span>
+                            <span class="text-xs text-gray-400">Preenchimento de dados</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Preencher Informações do Escritório</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>No formulário que abrir, preencha os seguintes campos obrigatórios:</p>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">Nome:</strong> Digite o nome fantasia do escritório
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">Razão Social:</strong> Insira a razão social oficial
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">Pessoa Física:</strong> Selecione "Sim" ou "Não"
+                                        <br><span class="text-sm text-gray-400">→ Se "Sim", preencha também o campo <strong>CPF</strong></span>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">Marcadores:</strong> Adicione o marcador <strong class="text-blue-400">"Escritório"</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-amber-500 bg-opacity-10 border border-amber-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-amber-200"><strong>⚠️ Importante:</strong> O marcador "Escritório" é essencial para identificar e filtrar escritórios no sistema.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cadastrar_empresa_passo_2.png" alt="Menu de criação de escritório com campos" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_empresa_passo_2.png')">
+                        <img src="img/cadastrar_empresa_passo_2.png" alt="Formulário de criação de escritório" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cadastrar_empresa_passo_2.png')">
                     </div>
                 </div>
 
                 <!-- Passo 3 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
-                        <h4 class="text-xl font-semibold text-white">Confirmação</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Após preencher e salvar, você será redirecionado automaticamente para o perfil do escritório recém-criado.
-                        </p>
+                <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-blue-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 3</span>
+                            <span class="text-xs text-gray-400">Finalização</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Salvar e Confirmar</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Após preencher todos os campos:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Revise os dados inseridos</li>
+                                <li>Clique no botão <strong class="text-emerald-400">"Salvar"</strong></li>
+                                <li>Aguarde o processamento</li>
+                            </ol>
+                            <p class="mt-4">Você será <strong class="text-white">redirecionado automaticamente</strong> para o perfil do escritório recém-criado, onde poderá visualizar e editar informações adicionais.</p>
+                        </div>
+                        <div class="bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-emerald-200"><strong>✅ Próximo passo:</strong> Com o escritório cadastrado, você já pode vincular advogados a ele!</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cadastrar_empresa_passo_3.png" alt="Perfil do escritório criado" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_empresa_passo_3.png')">
+                        <img src="img/cadastrar_empresa_passo_3.png" alt="Perfil do escritório criado" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cadastrar_empresa_passo_3.png')">
                     </div>
                 </div>
             </div>
@@ -315,85 +691,168 @@
 
         <!-- Seção: Como Cadastrar um Advogado -->
         <section id="panel-advogado" class="tab-panel mb-16 hidden">
-            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
-                &larr; Voltar para a Central
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-8 inline-flex items-center gap-2 text-lg font-medium transition-all hover:gap-3" data-target="panel-home">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Voltar para a Central
             </a>
-            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
-                Como Cadastrar um Advogado (Pessoa)
-            </h3>
             
-            <div class="space-y-10">
+            <!-- Floating Back Button -->
+            <button class="floating-back-btn panel-trigger bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold p-4 rounded-full shadow-2xl" data-target="panel-home" title="Voltar para a Central">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </button>
+            
+            <div class="mb-10">
+                <h3 class="text-4xl font-bold text-white mb-4 flex items-center gap-3">
+                    <svg class="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    Como Cadastrar um Advogado (Pessoa)
+                </h3>
+                <p class="text-xl text-gray-400">Aprenda a vincular advogados aos escritórios cadastrados no sistema.</p>
+            </div>
+            
+            <div class="space-y-8">
                 <!-- Passo 1 (Adv) -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
-                        <h4 class="text-xl font-semibold text-white">Acessar "Pessoas"</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Dentro do perfil do escritório (criado no tutorial anterior), localize e clique na aba <strong>"Pessoas"</strong>.
-                        </p>
+                <div id="adv-passo-1" data-nav-title="Acessar Pessoas" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-purple-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-purple-500 to-purple-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 1</span>
+                            <span class="text-xs text-gray-400">Navegação inicial</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Acessar Aba "Pessoas"</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para adicionar um advogado ao escritório:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Acesse o <strong class="text-white">perfil do escritório</strong> previamente cadastrado</li>
+                                <li>Localize e clique na aba <strong class="text-purple-400">"Pessoas"</strong> no menu do perfil</li>
+                            </ol>
+                        </div>
+                        <div class="bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-blue-200"><strong>💡 Dica:</strong> Esta aba gerencia todos os contatos vinculados ao escritório.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cadastrar_advogado_passo_1.png" alt="Aba Pessoas no perfil do escritório" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_advogado_passo_1.png')">
+                        <img src="img/cadastrar_advogado_passo_1.png" alt="Aba Pessoas no perfil do escritório" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cadastrar_advogado_passo_1.png')">
                     </div>
                 </div>
 
                 <!-- Passo 2 (Adv) -->
-                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
-                        <h4 class="text-xl font-semibold text-white">Nova Pessoa</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Para adicionar um novo advogado, clique no botão azul <strong>"Nova pessoa"</strong>.
-                        </p>
+                <div id="adv-passo-2" data-nav-title="Nova Pessoa" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-purple-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-purple-500 to-purple-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 2</span>
+                            <span class="text-xs text-gray-400">Iniciar cadastro</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Clicar em "Nova Pessoa"</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para iniciar o cadastro do advogado:</p>
+                            <ul class="list-disc list-inside space-y-2 pl-2">
+                                <li>Clique no botão azul <strong class="text-purple-400">"Nova pessoa"</strong></li>
+                                <li>Um formulário de cadastro será aberto</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cadastrar_advogado_passo_2.png" alt="Botão Nova pessoa" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_advogado_passo_2.png')">
+                        <img src="img/cadastrar_advogado_passo_2.png" alt="Botão Nova pessoa" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cadastrar_advogado_passo_2.png')">
                     </div>
                 </div>
 
                 <!-- Passo 3 (Adv) -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
-                        <h4 class="text-xl font-semibold text-white">Selecionar Marcador "Advogado"</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            No formulário "Nova pessoa", o primeiro passo é selecionar o marcador <strong>"Advogado"</strong>. Isso fará com que os campos corretos (como a OAB) apareçam.
-                        </p>
+                <div id="adv-passo-3" data-nav-title="Marcador Advogado" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-purple-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-purple-500 to-purple-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 3</span>
+                            <span class="text-xs text-gray-400">Seleção de tipo</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Selecionar Marcador "Advogado"</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>No formulário "Nova pessoa":</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Localize o campo <strong class="text-white">"Marcadores"</strong></li>
+                                <li>Selecione o marcador <strong class="text-purple-400">"Advogado"</strong></li>
+                                <li>Os campos específicos (como OAB) aparecerão automaticamente</li>
+                            </ol>
+                        </div>
+                        <div class="bg-amber-500 bg-opacity-10 border border-amber-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-amber-200"><strong>⚠️ Importante:</strong> Este marcador determina quais campos serão exibidos no formulário.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cadastrar_advogado_passo_3.png" alt="Selecionar marcador Advogado" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_advogado_passo_3.png')">
+                        <img src="img/cadastrar_advogado_passo_3.png" alt="Selecionar marcador Advogado" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cadastrar_advogado_passo_3.png')">
                     </div>
                 </div>
 
                 <!-- Passo 4 (Adv) -->
-                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 4</span>
-                        <h4 class="text-xl font-semibold text-white">Preencher Dados do Advogado</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Após o marcador ser selecionado, preencha os campos <strong>"Nome"</strong> e <strong>"OAB"</strong>.
-                        </p>
-                        <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
-                            <li>A OAB deve seguir o formato <strong>UFXXXXX</strong> (ex: SP133996).</li>
-                            <li>O campo <strong>"Empresa"</strong> já estará corretamente preenchido com o escritório de origem.</li>
-                        </ul>
+                <div id="adv-passo-4" data-nav-title="Dados do Advogado" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-purple-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-purple-500 to-purple-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 4</span>
+                            <span class="text-xs text-gray-400">Preenchimento</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Preencher Dados do Advogado</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Preencha os campos obrigatórios:</p>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-purple-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">Nome:</strong> Nome completo do advogado
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-purple-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">OAB:</strong> Formato <code class="bg-slate-700 px-2 py-1 rounded text-purple-300">UFXXXXX</code>
+                                        <br><span class="text-sm text-gray-400">→ Exemplo: SP133996</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-purple-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">Empresa:</strong> Preenchido automaticamente com o escritório atual
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cadastrar_advogado_passo_4.png" alt="Preenchimento dos campos Nome e OAB" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_advogado_passo_4.png')">
+                        <img src="img/cadastrar_advogado_passo_4.png" alt="Preenchimento dos campos Nome e OAB" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cadastrar_advogado_passo_4.png')">
                     </div>
                 </div>
 
                 <!-- Passo 5 (Adv) -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 5</span>
-                        <h4 class="text-xl font-semibold text-white">Confirmação e Vínculo</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Ao salvar, você será redirecionado ao perfil do advogado. Note que o campo <strong>"Empresa"</strong> (destacado) mostra o vínculo com o escritório, permitindo navegar de volta.
-                        </p>
+                <div id="adv-passo-5" data-nav-title="Salvar e Confirmar" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-purple-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 5</span>
+                            <span class="text-xs text-gray-400">Finalização</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Confirmação e Vínculo</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Após preencher todos os campos:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Revise os dados inseridos</li>
+                                <li>Clique no botão <strong class="text-emerald-400">"Salvar"</strong></li>
+                                <li>Aguarde o processamento</li>
+                            </ol>
+                            <p class="mt-4">Você será <strong class="text-white">redirecionado automaticamente</strong> para o perfil do advogado. O campo "Empresa" mostrará o vínculo com o escritório.</p>
+                        </div>
+                        <div class="bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-emerald-200"><strong>✅ Sucesso:</strong> O advogado está agora vinculado ao escritório!</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cadastrar_advogado_passo_5.png" alt="Perfil do advogado com link para a empresa" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cadastrar_advogado_passo_5.png')">
+                        <img src="img/cadastrar_advogado_passo_5.png" alt="Perfil do advogado com link para a empresa" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cadastrar_advogado_passo_5.png')">
                     </div>
                 </div>
 
@@ -402,85 +861,178 @@
 
         <!-- Seção: Como Editar Informações do Reclamante -->
         <section id="panel-reclamante" class="tab-panel mb-16 hidden">
-            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
-                &larr; Voltar para a Central
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-8 inline-flex items-center gap-2 text-lg font-medium transition-all hover:gap-3" data-target="panel-home">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Voltar para a Central
             </a>
-            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
-                Como Editar Informações do Reclamante
-            </h3>
             
-            <div class="space-y-10">
+            <!-- Floating Back Button -->
+            <button class="floating-back-btn panel-trigger bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold p-4 rounded-full shadow-2xl" data-target="panel-home" title="Voltar para a Central">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </button>
+            
+            <div class="mb-10">
+                <h3 class="text-4xl font-bold text-white mb-4 flex items-center gap-3">
+                    <svg class="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                    Como Editar Informações do Reclamante
+                </h3>
+                <p class="text-xl text-gray-400">Aprenda a atualizar dados cadastrais, marcadores e telefones de clientes.</p>
+            </div>
+            
+            <div class="space-y-8">
                 <!-- Passo 1 -->
-                <div id="rec-passo-1" data-nav-title="Acessar Edição" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
-                        <h4 class="text-xl font-semibold text-white">Acessar a Edição</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            No perfil do reclamante que deseja editar, clique no botão <strong>"Opções"</strong> (geralmente no canto superior) e, em seguida, selecione <strong>"Editar Cliente"</strong>.
-                        </p>
+                <div id="rec-passo-1" data-nav-title="Acessar Edição" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-cyan-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 1</span>
+                            <span class="text-xs text-gray-400">Navegação inicial</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Acessar Menu de Edição</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para modificar os dados de um reclamante:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Acesse o <strong class="text-white">perfil do cliente</strong> que deseja editar</li>
+                                <li>Clique no botão <strong class="text-cyan-400">"Opções"</strong> no canto superior</li>
+                                <li>Selecione <strong class="text-cyan-400">"Editar Cliente"</strong> no menu dropdown</li>
+                            </ol>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/editar_reclamante_1.png" alt="Botão Opções e Editar Cliente" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/editar_reclamante_1.png')">
+                        <img src="img/editar_reclamante_1.png" alt="Botão Opções e Editar Cliente" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/editar_reclamante_1.png')">
                     </div>
                 </div>
 
                 <!-- Passo 2 -->
-                <div id="rec-passo-2" data-nav-title="Marcador e CPF" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
-                        <h4 class="text-xl font-semibold text-white">Marcador e CPF</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            No menu de edição, certifique-se de que o campo <strong>"Marcador"</strong> está preenchido com <strong>"Reclamante"</strong>.
-                        </p>
-                        <p class="text-gray-300 leading-relaxed">
-                            Aproveite para preencher o campo <strong>"CPF"</strong>, caso ele esteja vazio.
-                        </p>
+                <div id="rec-passo-2" data-nav-title="Marcador e CPF" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-cyan-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 2</span>
+                            <span class="text-xs text-gray-400">Verificação de dados</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Verificar Marcador e CPF</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>No formulário de edição:</p>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">Marcador:</strong> Confirme que está marcado como <strong class="text-cyan-400">"Reclamante"</strong>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">CPF:</strong> Preencha o documento se estiver vazio
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-blue-200"><strong>💡 Dica:</strong> O marcador correto garante que o cliente apareça nas listas filtradas.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/editar_reclamante_2.png" alt="Campo Marcador e CPF" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/editar_reclamante_2.png')">
+                        <img src="img/editar_reclamante_2.png" alt="Campo Marcador e CPF" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/editar_reclamante_2.png')">
                     </div>
                 </div>
 
                 <!-- Passo 3 -->
-                <div id="rec-passo-3" data-nav-title="Telefone (Máscara)" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
-                        <h4 class="text-xl font-semibold text-white">Selecionar Máscara de Telefone</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Na seção <strong>"Telefones"</strong>, clique no botão à esquerda do campo de número (geralmente um ícone de globo ou bandeira) e selecione a máscara de telefones do <strong>Brasil</strong>.
-                        </p>
+                <div id="rec-passo-3" data-nav-title="Máscara de Telefone" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-cyan-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 3</span>
+                            <span class="text-xs text-gray-400">Configuração de telefone</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Selecionar Máscara do Brasil</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para configurar o formato correto do telefone:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Localize a seção <strong class="text-white">"Telefones"</strong></li>
+                                <li>Clique no <strong class="text-cyan-400">ícone à esquerda</strong> do campo (geralmente um globo ou bandeira)</li>
+                                <li>Selecione <strong class="text-cyan-400">"+55 Brasil"</strong> na lista</li>
+                            </ol>
+                        </div>
+                        <div class="bg-cyan-500 bg-opacity-10 border border-cyan-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-cyan-200"><strong>⚠️ Importante:</strong> A máscara correta permite validação automática do formato.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/editar_reclamante_3.png" alt="Seleção de máscara de telefone" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/editar_reclamante_3.png')">
+                        <img src="img/editar_reclamante_3.png" alt="Seleção de máscara de telefone" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/editar_reclamante_3.png')">
                     </div>
                 </div>
                 
                 <!-- Passo 4 -->
-                <div id="rec-passo-4" data-nav-title="Telefone (Add/Rem)" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 4</span>
-                        <h4 class="text-xl font-semibold text-white">Adicionar ou Remover Telefones</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Preencha o campo com o <strong>DDD</strong> e o <strong>número</strong>.
-                        </p>
-                         <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
-                            <li>Para adicionar mais números, clique no ícone <strong>"+"</strong> ao lado do campo.</li>
-                            <li>Para remover números, clique no ícone <strong>"-"</strong> ao lado do campo correspondente.</li>
-                        </ul>
+                <div id="rec-passo-4" data-nav-title="Gerenciar Telefones" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-cyan-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 4</span>
+                            <span class="text-xs text-gray-400">Adicionar/remover números</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Gerenciar Números de Telefone</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para gerenciar os telefones do cliente:</p>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-emerald-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">Adicionar:</strong> Clique no ícone <strong class="text-emerald-400">"+"</strong> para inserir novos números
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-red-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">Remover:</strong> Clique no ícone <strong class="text-red-400">"-"</strong> para excluir números
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                    <div>
+                                        <strong class="text-white">Formato:</strong> Digite <code class="bg-slate-700 px-2 py-1 rounded text-cyan-300">(DDD) XXXXX-XXXX</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/editar_reclamante_4.png" alt="Botões de adicionar e remover telefone" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/editar_reclamante_4.png')">
+                        <img src="img/editar_reclamante_4.png" alt="Botões de adicionar e remover telefone" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/editar_reclamante_4.png')">
                     </div>
                 </div>
                 
                 <!-- Passo 5 -->
-                <div id="rec-passo-5" data-nav-title="Salvar" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 5</span>
-                        <h4 class="text-xl font-semibold text-white">Salvar Alterações</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Após realizar todas as mudanças, clique no botão <strong>"Salvar"</strong> no final do formulário para aplicar as edições.
-                        </p>
+                <div id="rec-passo-5" data-nav-title="Salvar Alterações" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-emerald-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 5</span>
+                            <span class="text-xs text-gray-400">Finalização</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Confirmar e Salvar</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para aplicar as modificações:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Revise todas as <strong class="text-white">alterações realizadas</strong></li>
+                                <li>Role até o final do formulário</li>
+                                <li>Clique no botão <strong class="text-emerald-400">"Salvar"</strong></li>
+                            </ol>
+                        </div>
+                        <div class="bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-emerald-200"><strong>✅ Sucesso:</strong> As alterações serão aplicadas imediatamente ao perfil!</p>
+                        </div>
                     </div>
                 </div>
 
@@ -489,57 +1041,104 @@
 
         <!-- Seção: Escritórios e Advogados no Padrão CNA/CNSA -->
         <section id="panel-cna" class="tab-panel mb-16 hidden">
-            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
-                &larr; Voltar para a Central
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-8 inline-flex items-center gap-2 text-lg font-medium transition-all hover:gap-3" data-target="panel-home">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Voltar para a Central
             </a>
-            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
-                Escritórios e Advogados no Padrão CNA/CNSA
-            </h3>
             
-            <div class="space-y-10">
+            <div class="mb-10">
+                <h3 class="text-4xl font-bold text-white mb-4 flex items-center gap-3">
+                    <svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Escritórios e Advogados no Padrão CNA/CNSA
+                </h3>
+                <p class="text-xl text-gray-400">Aprenda a consultar e verificar escritórios e advogados nos sistemas CNA e CNSA da OAB.</p>
+            </div>
+
+            <button class="floating-back-btn panel-trigger bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold p-4 rounded-full shadow-2xl" data-target="panel-home" title="Voltar para a Central">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </button>
+            
+            <div class="space-y-8">
                 <!-- Passo 1 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
-                        <h4 class="text-xl font-semibold text-white">Acessar o Site do CNSA</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Para encontrar um escritório, acesse o site do <a href="https://cnsa.oab.org.br" target="_blank" class="text-blue-400 hover:text-blue-300">CNSA</a>.
-                        </p>
+                <div id="cna-passo-1" data-nav-title="Acessar CNSA" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-emerald-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 1</span>
+                            <span class="text-xs text-gray-400">Acesso ao sistema</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Acessar o Site do CNSA</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para consultar um escritório cadastrado na OAB:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Acesse o site oficial: <a href="https://cnsa.oab.org.br" target="_blank" class="text-emerald-400 hover:text-emerald-300 font-semibold underline">cnsa.oab.org.br</a></li>
+                                <li>Aguarde o carregamento completo da página</li>
+                            </ol>
+                        </div>
+                        <div class="bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-emerald-200"><strong>💡 Dica:</strong> O CNSA é o Cadastro Nacional de Sociedades de Advogados da OAB.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cnsa_passo_1.png" alt="Site do CNSA" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cnsa_passo_1.png')">
+                        <img src="img/cnsa_passo_1.png" alt="Site do CNSA" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cnsa_passo_1.png')">
                     </div>
                 </div>
 
                 <!-- Passo 2 -->
-                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
-                        <h4 class="text-xl font-semibold text-white">Realizar a Consulta</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Preencha os campos de nome e complete a verificação "Não sou um robô". Ao fazer a consulta, a página mostrará os resultados.
-                        </p>
-                        <!-- Dica Especial -->
-                        <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mt-6">
-                            <p class="text-gray-300 leading-relaxed"><strong class="text-white">Dica:</strong> Para encontrar o CNPJ do escritório para cadastro na Ploomes, use o <a href="https://empresadois.com.br/cnpj" target="_blank" class="text-blue-400 hover:text-blue-300">Empresa Dois</a> ou o <a href="https://www.google.com" target="_blank" class="text-blue-400 hover:text-blue-300">Google</a>.</p>
+                <div id="cna-passo-2" data-nav-title="Realizar Consulta" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-emerald-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 2</span>
+                            <span class="text-xs text-gray-400">Busca</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Realizar a Consulta</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para buscar o escritório:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Preencha o campo <strong class="text-white">"Nome"</strong> com o nome do escritório</li>
+                                <li>Complete a verificação <strong class="text-emerald-400">"Não sou um robô"</strong></li>
+                                <li>Clique em <strong class="text-emerald-400">"Consultar"</strong></li>
+                                <li>Aguarde os resultados aparecerem na tela</li>
+                            </ol>
+                        </div>
+                        <div class="bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-blue-200"><strong>💡 Dica:</strong> Para encontrar o CNPJ do escritório e cadastrar na Ploomes, use o <a href="https://empresadois.com.br/cnpj" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Empresa Dois</a> ou o <a href="https://www.google.com" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Google</a>.</p>
                         </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cnsa_passo_2.png" alt="Consulta no CNSA" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cnsa_passo_2.png')">
+                        <img src="img/cnsa_passo_2.png" alt="Consulta no CNSA" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cnsa_passo_2.png')">
                     </div>
                 </div>
 
                 <!-- Passo 3 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
-                        <h4 class="text-xl font-semibold text-white">Verificar Advogados Associados</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Ao clicar no resultado do escritório, a página mostrará os advogados associados. Clicando no nome de um advogado, você será redirecionado ao perfil no <a href="https://cna.oab.org.br" target="_blank" class="text-blue-400 hover:text-blue-300">CNA</a>, onde pode consultar a OAB.
-                        </p>
+                <div id="cna-passo-3" data-nav-title="Verificar Advogados" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-emerald-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 3</span>
+                            <span class="text-xs text-gray-400">Verificação final</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Verificar Advogados Associados</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para consultar os advogados vinculados ao escritório:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Clique no <strong class="text-white">resultado do escritório</strong> na lista</li>
+                                <li>Visualize os <strong class="text-emerald-400">advogados associados</strong></li>
+                                <li>Clique no <strong class="text-white">nome de um advogado</strong> para ver mais detalhes</li>
+                                <li>Você será redirecionado ao perfil no <a href="https://cna.oab.org.br" target="_blank" class="text-emerald-400 hover:text-emerald-300 underline">CNA</a></li>
+                                <li>No perfil, consulte o número da <strong class="text-emerald-400">OAB</strong></li>
+                            </ol>
+                        </div>
+                        <div class="bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-emerald-200"><strong>✅ Importante:</strong> Sempre verifique a OAB no CNA para garantir dados corretos no cadastro.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/cnsa_passo_3.png" alt="Perfil do advogado no CNA" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/cnsa_passo_3.png')">
+                        <img src="img/cnsa_passo_3.png" alt="Perfil do advogado no CNA" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/cnsa_passo_3.png')">
                     </div>
                 </div>
             </div>
@@ -547,42 +1146,79 @@
 
         <!-- Seção: Como Criar Marcadores -->
         <section id="panel-marcadores" class="tab-panel mb-16 hidden">
-            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
-                &larr; Voltar para a Central
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-8 inline-flex items-center gap-2 text-lg font-medium transition-all hover:gap-3" data-target="panel-home">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Voltar para a Central
             </a>
-            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
-                Como Criar e Gerenciar Marcadores
-            </h3>
             
-            <div class="space-y-10">
+            <div class="mb-10">
+                <h3 class="text-4xl font-bold text-white mb-4 flex items-center gap-3">
+                    <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                    </svg>
+                    Como Criar e Gerenciar Marcadores
+                </h3>
+                <p class="text-xl text-gray-400">Aprenda a criar e configurar marcadores para organizar seus negócios.</p>
+            </div>
+
+            <button class="floating-back-btn panel-trigger bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold p-4 rounded-full shadow-2xl" data-target="panel-home" title="Voltar para a Central">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </button>
+            
+            <div class="space-y-8">
                 <!-- Passo 1 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
-                        <h4 class="text-xl font-semibold text-white">Acessar Configuração de Marcadores</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Na tela de <strong>"Negócios"</strong> (visão de funil), clique no ícone de <strong>engrenagem (Menu)</strong> no canto superior direito. Em seguida, selecione <strong>"Configurar marcadores de negócios"</strong>.
-                        </p>
+                <div id="marc-passo-1" data-nav-title="Acessar Configuração" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-amber-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 1</span>
+                            <span class="text-xs text-gray-400">Navegação</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Acessar Configuração de Marcadores</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para acessar as configurações:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Na tela de <strong class="text-white">"Negócios"</strong> (visão de funil)</li>
+                                <li>Clique no ícone de <strong class="text-amber-400">engrenagem (Menu)</strong> no canto superior direito</li>
+                                <li>Selecione <strong class="text-amber-400">"Configurar marcadores de negócios"</strong></li>
+                            </ol>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/marcadores_1.png" alt="Menu de configurar marcadores" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/marcadores_1.png')">
+                        <img src="img/marcadores_1.png" alt="Menu de configurar marcadores" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/marcadores_1.png')">
                     </div>
                 </div>
 
                 <!-- Passo 2 -->
-                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
-                        <h4 class="text-xl font-semibold text-white">Editar ou Criar Marcadores</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Neste menu, você pode editar marcadores existentes (mudar a cor ou o nome) clicando neles.
-                        </p>
-                        <p class="text-gray-300 leading-relaxed">
-                            Para criar um novo, preencha os campos <strong>"Descrição"</strong> (nome) e <strong>"Cor"</strong> no topo do menu e clique em <strong>Adicionar</strong>.
-                        </p>
+                <div id="marc-passo-2" data-nav-title="Criar/Editar" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-amber-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 2</span>
+                            <span class="text-xs text-gray-400">Gerenciamento</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Editar ou Criar Marcadores</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p><strong class="text-white">Para editar marcadores existentes:</strong></p>
+                            <ul class="list-disc list-inside space-y-2 pl-2">
+                                <li>Clique no marcador desejado</li>
+                                <li>Altere o <strong class="text-amber-400">nome</strong> ou a <strong class="text-amber-400">cor</strong></li>
+                            </ul>
+                            <p class="mt-4"><strong class="text-white">Para criar um novo marcador:</strong></p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Preencha o campo <strong class="text-amber-400">"Descrição"</strong> (nome do marcador)</li>
+                                <li>Escolha uma <strong class="text-amber-400">"Cor"</strong></li>
+                                <li>Clique em <strong class="text-emerald-400">"Adicionar"</strong></li>
+                            </ol>
+                        </div>
+                        <div class="bg-amber-500 bg-opacity-10 border border-amber-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-amber-200"><strong>💡 Dica:</strong> Use cores diferentes para categorias específicas e facilite a identificação visual dos negócios.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/marcadores_2.png" alt="Menu de criação de marcadores" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/marcadores_2.png')">
+                        <img src="img/marcadores_2.png" alt="Menu de criação de marcadores" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/marcadores_2.png')">
                     </div>
                 </div>
             </div>
@@ -590,125 +1226,179 @@
 
         <!-- Seção: Como Criar Filtros Avançados -->
         <section id="panel-filtros" class="tab-panel mb-16 hidden">
-            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
-                &larr; Voltar para a Central
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-8 inline-flex items-center gap-2 text-lg font-medium transition-all hover:gap-3" data-target="panel-home">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Voltar para a Central
             </a>
-            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
-                Como Criar Filtros Avançados
-            </h3>
             
-            <div class="space-y-10">
+            <div class="mb-10">
+                <h3 class="text-4xl font-bold text-white mb-4 flex items-center gap-3">
+                    <svg class="w-10 h-10 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                    </svg>
+                    Como Criar Filtros Avançados
+                </h3>
+                <p class="text-xl text-gray-400">Crie filtros personalizados para encontrar negócios específicos rapidamente.</p>
+            </div>
+
+            <button class="floating-back-btn panel-trigger bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-bold p-4 rounded-full shadow-2xl" data-target="panel-home" title="Voltar para a Central">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </button>
+            
+            <div class="space-y-8">
                 <!-- Passo 1 -->
-                <div id="fil-passo-1" data-nav-title="Novo Filtro" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
-                        <h4 class="text-xl font-semibold text-white">Acessar Menu de Filtros</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Na tela de <strong>"Negócios"</strong> (ou qualquer outra lista), clique em <strong>"Filtros"</strong>. Isso abrirá um menu com os filtros salvos e um botão <strong>"Novo Filtro"</strong>. Clique nele.
-                        </p>
+                <div id="fil-passo-1" data-nav-title="Novo Filtro" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-rose-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-rose-500 to-rose-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 1</span>
+                            <span class="text-xs text-gray-400">Iniciar</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Acessar Menu de Filtros</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para criar um novo filtro:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Na tela de <strong class="text-white">"Negócios"</strong> (ou qualquer lista)</li>
+                                <li>Clique em <strong class="text-rose-400">"Filtros"</strong></li>
+                                <li>No menu que abrir, clique em <strong class="text-rose-400">"Novo Filtro"</strong></li>
+                            </ol>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/filtro_1.png" alt="Botão Novo Filtro" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/filtro_1.png')">
+                        <img src="img/filtro_1.png" alt="Botão Novo Filtro" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/filtro_1.png')">
                     </div>
                 </div>
 
                 <!-- Passo 2 -->
-                <div id="fil-passo-2" data-nav-title="Config. Inicial" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
-                        <h4 class="text-xl font-semibold text-white">Configuração Inicial e Visibilidade</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            No menu de criação, este guia foca na aba <strong>"Filtros Avançados"</strong>. Dê um nome ao seu filtro.
-                        </p>
-                        <p class="text-gray-300 leading-relaxed">
-                            Para que todos na equipe possam usá-lo, clique em "Visível para: Apenas eu" e mude para <strong>"Um ou mais usuários"</strong> &rarr; <strong>"Todos da Empresa"</strong>.
-                        </p>
+                <div id="fil-passo-2" data-nav-title="Config. Inicial" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-rose-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-rose-500 to-rose-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 2</span>
+                            <span class="text-xs text-gray-400">Configurações</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Configuração Inicial e Visibilidade</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>No menu de criação:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Navegue até a aba <strong class="text-rose-400">"Filtros Avançados"</strong></li>
+                                <li>Dê um <strong class="text-white">nome</strong> ao seu filtro</li>
+                                <li>Para compartilhar com a equipe, clique em <strong class="text-white">"Visível para: Apenas eu"</strong></li>
+                                <li>Selecione <strong class="text-rose-400">"Um ou mais usuários"</strong> → <strong class="text-rose-400">"Todos da Empresa"</strong></li>
+                            </ol>
+                        </div>
+                        <div class="bg-rose-500 bg-opacity-10 border border-rose-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-rose-200"><strong>💡 Dica:</strong> Compartilhar filtros com a equipe garante que todos trabalhem com os mesmos critérios.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/filtro_2.png" alt="Menu de visibilidade do filtro" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/filtro_2.png')">
+                        <img src="img/filtro_2.png" alt="Menu de visibilidade do filtro" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/filtro_2.png')">
                     </div>
                 </div>
 
                 <!-- Passo 3 -->
-                <div id="fil-passo-3" data-nav-title="Adicionar Condições" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
-                        <h4 class="text-xl font-semibold text-white">Adicionar Condições (A Lógica)</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Na tabela, configure sua lógica:
-                        </p>
-                        <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
-                            <li><strong>Campo:</strong> O que você quer filtrar (ex: "Marcadores").</li>
-                            <li><strong>Operação:</strong> A lógica (ex: "Igual a" para incluir, ou "Diferente de" para excluir).</li>
-                            <li><strong>Valor:</strong> O valor específico (ex: o marcador "Escritório").</li>
-                        </ul>
-                        <p class="text-gray-300 leading-relaxed">Clique no ícone azul <strong>(+)</strong> para adicionar a condição.</p>
-                        
-                        <!-- Dica Especial (Estilo Novo) -->
-                        <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mt-6">
-                            <p class="text-gray-300 leading-relaxed"><strong class="text-white">Dica:</strong> Para filtrar por campos de outras entidades (ex: Reclamante), pesquise pelo campo "Cliente". Clique no botão "Cliente" que aparecer e o sistema mostrará todos os campos do Reclamante para você filtrar.</p>
+                <div id="fil-passo-3" data-nav-title="Adicionar Condições" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-rose-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-rose-500 to-rose-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 3</span>
+                            <span class="text-xs text-gray-400">Lógica do filtro</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Adicionar Condições (A Lógica)</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Configure a lógica do seu filtro na tabela:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li><strong class="text-rose-400">Campo:</strong> O que você quer filtrar (ex: "Marcadores")</li>
+                                <li><strong class="text-rose-400">Operação:</strong> A lógica aplicada (ex: "Igual a" para incluir, "Diferente de" para excluir)</li>
+                                <li><strong class="text-rose-400">Valor:</strong> O valor específico (ex: marcador "Escritório")</li>
+                                <li>Clique no ícone <strong class="text-blue-400">(+)</strong> para adicionar a condição</li>
+                            </ol>
+                        </div>
+                        <div class="bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-blue-200"><strong>💡 Dica Avançada:</strong> Para filtrar por campos de outras entidades (ex: Reclamante), pesquise pelo campo "Cliente". Clique no botão "Cliente" que aparecer e o sistema mostrará todos os campos do Reclamante para você filtrar.</p>
                         </div>
 
-                        <!-- Bloco de Guia em Vídeo (Estilo Limpo) -->
-                        <div class="mt-8">
-                            <h5 class="text-lg font-semibold text-white mb-3 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-blue-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                        <!-- Bloco de Guia em Vídeo -->
+                        <div class="mt-6">
+                            <h5 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-rose-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                                </svg>
                                 Guia em Vídeo (Passo 3)
                             </h5>
-                            <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                            <p class="text-gray-400 text-sm leading-relaxed mb-4">
                                 Este passo é complexo. Assista ao vídeo curto abaixo mostrando o processo em detalhe.
                             </p>
-                            <!-- Placeholder do Vídeo Embedado -->
-                            <div class="w-full overflow-hidden rounded-md">
-                                <!-- Substitua este 'src' pelo link embed do seu vídeo -->
+                            <div class="w-full overflow-hidden rounded-xl border border-slate-600">
                                 <iframe class="w-full aspect-video" 
                                         src="https://www.youtube.com/embed/Yds5s-j9DTo" 
-                                        title="Video tutorial placeholder" 
+                                        title="Tutorial de Filtros Avançados" 
                                         frameborder="0" 
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                         allowfullscreen>
                                 </iframe>
                             </div>
                         </div>
-
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/filtro_3.png" alt="Tabela de condições do filtro" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/filtro_3.png')">
+                        <img src="img/filtro_3.png" alt="Tabela de condições do filtro" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/filtro_3.png')">
                     </div>
                 </div>
 
                 <!-- Passo 4 -->
-                <div id="fil-passo-4" data-nav-title="Filtros Complexos" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 4</span>
-                        <h4 class="text-xl font-semibold text-white">Filtros Complexos (E / OU)</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Para adicionar mais condições (ex: Marcador = "Escritório" E Cliente (Reclamante) CPF = "Preenchido"), basta repetir o Passo 3.
-                        </p>
-                        <p class="text-gray-300 leading-relaxed">
-                            Você pode usar os botões <strong>"E"</strong> / <strong>"OU"</strong> para criar lógicas mais complexas.
-                        </p>
+                <div id="fil-passo-4" data-nav-title="Filtros Complexos" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-rose-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-rose-500 to-rose-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 4</span>
+                            <span class="text-xs text-gray-400">Lógica avançada</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Filtros Complexos (E / OU)</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para criar filtros mais sofisticados:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Repita o <strong class="text-white">Passo 3</strong> para adicionar mais condições</li>
+                                <li>Use o botão <strong class="text-rose-400">"E"</strong> quando TODAS as condições devem ser verdadeiras</li>
+                                <li>Use o botão <strong class="text-rose-400">"OU"</strong> quando PELO MENOS UMA condição deve ser verdadeira</li>
+                            </ol>
+                            <p class="mt-4"><em class="text-gray-400">Exemplo: Marcador = "Escritório" <strong class="text-rose-400">E</strong> CPF = "Preenchido"</em></p>
+                        </div>
+                        <div class="bg-purple-500 bg-opacity-10 border border-purple-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-purple-200"><strong>💡 Dica:</strong> Combine operadores E/OU para criar lógicas poderosas e encontrar exatamente o que precisa.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/filtro_4.png" alt="Lógica E/OU dos filtros" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/filtro_4.png')">
+                        <img src="img/filtro_4.png" alt="Lógica E/OU dos filtros" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/filtro_4.png')">
                     </div>
                 </div>
 
                 <!-- Passo 5 -->
-                <div id="fil-passo-5" data-nav-title="Aplicar ou Salvar" class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 5</span>
-                        <h4 class="text-xl font-semibold text-white">Aplicar ou Salvar</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Com o filtro pronto, você tem duas opções:
-                        </p>
-                        <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
-                            <li><strong>Aplicar:</strong> Usa o filtro imediatamente, mas não o salva.</li>
-                            <li><strong>Salvar:</strong> Salva o filtro na sua lista para ser reutilizado no futuro.</li>
-                        </ul>
+                <div id="fil-passo-5" data-nav-title="Aplicar ou Salvar" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-rose-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 5</span>
+                            <span class="text-xs text-gray-400">Finalização</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Aplicar ou Salvar</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Com o filtro pronto, escolha uma opção:</p>
+                            <div class="space-y-3 mt-4">
+                                <div class="bg-slate-700 bg-opacity-50 p-4 rounded-lg">
+                                    <p class="font-bold text-blue-400 mb-1">🔵 Aplicar</p>
+                                    <p class="text-sm">Usa o filtro imediatamente na tela atual, mas <strong class="text-white">não o salva</strong> para uso futuro.</p>
+                                </div>
+                                <div class="bg-slate-700 bg-opacity-50 p-4 rounded-lg">
+                                    <p class="font-bold text-emerald-400 mb-1">💾 Salvar</p>
+                                    <p class="text-sm">Salva o filtro na sua lista pessoal ou compartilhada para ser <strong class="text-white">reutilizado sempre</strong> que precisar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-emerald-200"><strong>✅ Recomendação:</strong> Use "Salvar" para filtros que você usará frequentemente!</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/filtro_5.png" alt="Botões Aplicar e Salvar" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/filtro_5.png')">
+                        <img src="img/filtro_5.png" alt="Botões Aplicar e Salvar" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/filtro_5.png')">
                     </div>
                 </div>
             </div>
@@ -716,92 +1406,151 @@
 
         <!-- Seção: Como Cadastrar Leads B2B (Importação) -->
         <section id="panel-leads" class="tab-panel mb-16 hidden">
-            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
-                &larr; Voltar para a Central
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-8 inline-flex items-center gap-2 text-lg font-medium transition-all hover:gap-3" data-target="panel-home">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Voltar para a Central
             </a>
-            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
-                Como Cadastrar Leads B2B (Importação)
-            </h3>
             
-            <div class="space-y-10">
+            <div class="mb-10">
+                <h3 class="text-4xl font-bold text-white mb-4 flex items-center gap-3">
+                    <svg class="w-10 h-10 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    Como Cadastrar Leads B2B (Importação)
+                </h3>
+                <p class="text-xl text-gray-400">Aprenda a importar múltiplos leads em massa usando planilhas Excel.</p>
+            </div>
+
+            <button class="floating-back-btn panel-trigger bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-bold p-4 rounded-full shadow-2xl" data-target="panel-home" title="Voltar para a Central">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </button>
+            
+            <div class="space-y-8">
                 <!-- Passo 1 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
-                        <h4 class="text-xl font-semibold text-white">Acessar Negócios e Selecionar Funil</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            No menu lateral, navegue até <strong>"Negócios"</strong>. Em seguida, selecione o funil que deseja fazer as importações.
-                        </p>
+                <div id="leads-passo-1" data-nav-title="Selecionar Funil" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-indigo-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 1</span>
+                            <span class="text-xs text-gray-400">Navegação inicial</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Acessar Negócios e Selecionar Funil</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para começar a importação em massa:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>No <strong class="text-white">menu lateral</strong>, clique em <strong class="text-indigo-400">"Negócios"</strong></li>
+                                <li>Na tela que abrir, selecione o <strong class="text-indigo-400">funil</strong> onde deseja importar os leads</li>
+                            </ol>
+                        </div>
+                        <div class="bg-indigo-500 bg-opacity-10 border border-indigo-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-indigo-200"><strong>💡 Dica:</strong> Verifique se está no funil correto antes de prosseguir com a importação.</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/leads_passo_1.png" alt="Menu lateral Negócios e seleção de funil" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_passo_1.png')">
+                        <img src="img/leads_passo_1.png" alt="Menu lateral Negócios e seleção de funil" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/leads_passo_1.png')">
                     </div>
                 </div>
 
                 <!-- Passo 2 -->
-                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
-                        <h4 class="text-xl font-semibold text-white">Acessar Importação pelo Excel</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Na tela do <strong>"Funil"</strong>, clique no ícone de engrenagem (Menu) no canto superior direito. Em seguida, selecione <strong>"Importar negócios pelo Excel"</strong>.
-                        </p>
+                <div id="leads-passo-2" data-nav-title="Acessar Importação" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-indigo-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 2</span>
+                            <span class="text-xs text-gray-400">Configurações</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Acessar Menu de Importação</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para acessar a ferramenta de importação:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>No canto <strong class="text-white">superior direito</strong>, clique no ícone de <strong class="text-indigo-400">engrenagem (Menu)</strong></li>
+                                <li>No menu que abrir, selecione <strong class="text-indigo-400">"Importar negócios pelo Excel"</strong></li>
+                            </ol>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/leads_passo_2.png" alt="Ícone de engrenagem e opção Importar negócios pelo Excel" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_passo_2.png')">
+                        <img src="img/leads_passo_2.png" alt="Ícone de engrenagem e opção Importar negócios pelo Excel" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/leads_passo_2.png')">
                     </div>
                 </div>
 
                 <!-- Passo 3 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
-                        <h4 class="text-xl font-semibold text-white">Fazer Upload da Planilha</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            No menu de importação, clique em <strong>"Fazer upload da planilha"</strong> e selecione a planilha que deseja fazer a importação.
-                        </p>
-                        <!-- Dica Especial -->
-                        <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mt-6">
-                            <p class="text-gray-300 leading-relaxed mb-4"><strong class="text-white">Dica:</strong> Use esse modelo de planilha, preenchendo com as informações necessárias.</p>
-                            <a href="res/modelo_leads_b2b.xlsx" download class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm inline-block">
-                                Baixar Modelo de Planilha
+                <div id="leads-passo-3" data-nav-title="Upload da Planilha" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-indigo-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 3</span>
+                            <span class="text-xs text-gray-400">Arquivo Excel</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Fazer Upload da Planilha</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para enviar sua planilha:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Clique em <strong class="text-indigo-400">"Fazer upload da planilha"</strong></li>
+                                <li>Selecione o arquivo Excel (.xlsx) do seu computador</li>
+                                <li>Aguarde o upload ser concluído</li>
+                            </ol>
+                        </div>
+                        <div class="bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-blue-200 mb-3"><strong>💡 Dica:</strong> Use o modelo de planilha abaixo para garantir que todos os campos estejam corretos.</p>
+                            <a href="res/modelo_leads_b2b.xlsx" download class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-lg text-sm inline-block transition-all">
+                                📥 Baixar Modelo de Planilha
                             </a>
                         </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/leads_passo_3.png" alt="Botão Fazer upload da planilha" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_passo_3.png')">
+                        <img src="img/leads_passo_3.png" alt="Botão Fazer upload da planilha" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/leads_passo_3.png')">
                     </div>
                 </div>
 
                 <!-- Passo 4 -->
-                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 4</span>
-                        <h4 class="text-xl font-semibold text-white">Mapear os Campos</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Em seguida, você deverá mapear os campos da planilha para os campos que a Ploomes entenda. Para isso, basta clicar na caixa como na imagem e selecionar os campos para serem mapeados.
-                        </p>
-                        <!-- Dica Especial -->
-                        <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mt-6">
-                            <p class="text-gray-300 leading-relaxed"><strong class="text-white">Dica:</strong> Preencha o campo Responsável com o seu nome de usuário da Ploomes.</p>
+                <div id="leads-passo-4" data-nav-title="Mapear Campos" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-indigo-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 4</span>
+                            <span class="text-xs text-gray-400">Configuração dos campos</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Mapear os Campos</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para vincular os campos da planilha aos campos do Ploomes:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Clique em cada <strong class="text-white">caixa de seleção</strong></li>
+                                <li>Escolha o campo correspondente do Ploomes</li>
+                                <li>Repita para todos os campos da planilha</li>
+                            </ol>
+                        </div>
+                        <div class="bg-amber-500 bg-opacity-10 border border-amber-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-amber-200"><strong>⚠️ Importante:</strong> No campo <strong>Responsável</strong>, preencha com seu nome de usuário do Ploomes.</p>
                         </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/leads_passo_4.png" alt="Mapeamento dos campos da planilha" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_passo_4.png')">
+                        <img src="img/leads_passo_4.png" alt="Mapeamento dos campos da planilha" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/leads_passo_4.png')">
                     </div>
                 </div>
 
                 <!-- Passo 5 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 5</span>
-                        <h4 class="text-xl font-semibold text-white">Confirmar e Finalizar Importação</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Após mapear todos os campos, clique em <strong>"Confirmar"</strong>, e aparecerá uma tela de progresso da importação. Após finalizar, clique em <strong>"Finalizar Importação"</strong>.
-                        </p>
+                <div id="leads-passo-5" data-nav-title="Finalizar" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-indigo-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 5</span>
+                            <span class="text-xs text-gray-400">Conclusão</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Confirmar e Finalizar Importação</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para concluir o processo de importação:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Revise todos os mapeamentos realizados</li>
+                                <li>Clique em <strong class="text-emerald-400">"Confirmar"</strong></li>
+                                <li>Aguarde a <strong class="text-white">barra de progresso</strong> completar</li>
+                                <li>Clique em <strong class="text-emerald-400">"Finalizar Importação"</strong></li>
+                            </ol>
+                        </div>
+                        <div class="bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-emerald-200"><strong>✅ Sucesso:</strong> Seus leads foram importados e estão prontos para serem trabalhados no funil!</p>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/leads_passo_5.png" alt="Tela de progresso e botão Finalizar Importação" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_passo_5.png')">
+                        <img src="img/leads_passo_5.png" alt="Tela de progresso e botão Finalizar Importação" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/leads_passo_5.png')">
                     </div>
                 </div>
             </div>
@@ -809,85 +1558,121 @@
 
         <!-- Seção: Como Cadastrar Leads B2B (Manual) -->
         <section id="panel-leads-manual" class="tab-panel mb-16 hidden">
-            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-6 inline-block" data-target="panel-home">
-                &larr; Voltar para a Central
+            <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 mb-8 inline-flex items-center gap-2 text-lg font-medium transition-all hover:gap-3" data-target="panel-home">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Voltar para a Central
             </a>
-            <h3 class="text-2xl font-semibold text-white mb-8 border-l-4 border-blue-500 pl-4">
-                Como Cadastrar Leads B2B (Manual)
-            </h3>
             
-            <div class="space-y-10">
+            <div class="mb-10">
+                <h3 class="text-4xl font-bold text-white mb-4 flex items-center gap-3">
+                    <svg class="w-10 h-10 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                    </svg>
+                    Como Cadastrar Leads B2B (Manual)
+                </h3>
+                <p class="text-xl text-gray-400">Aprenda a cadastrar negócios B2B manualmente no Ploomes.</p>
+            </div>
+
+            <button class="floating-back-btn panel-trigger bg-gradient-to-r from-violet-500 to-violet-600 hover:from-violet-600 hover:to-violet-700 text-white font-bold p-4 rounded-full shadow-2xl" data-target="panel-home" title="Voltar para a Central">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </button>
+            
+            <div class="space-y-8">
                 <!-- Passo 1 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 1</span>
-                        <h4 class="text-xl font-semibold text-white">Certificar Entidades Criadas</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Antes de criar negócios manualmente no funil:
-                        </p>
-                        <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
-                            <li>Certifique-se de que o escritório já está cadastrado.</li>
-                            <li>Certifique-se de que os advogados vinculados ao escritório estão cadastrados.</li>
-                        </ul>
-                        <p class="text-gray-300 leading-relaxed">
-                            Siga os tutoriais para <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300" data-target="panel-empresa">cadastrar Escritório</a> e <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300" data-target="panel-advogado">Advogados</a> se necessário.
-                        </p>
-                        <!-- Dica Especial -->
-                        <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mt-6">
-                            <p class="text-gray-300 leading-relaxed"><strong class="text-white">Dica:</strong> Esses cadastros são pré-requisitos para criar negócios B2B de forma eficiente.</p>
+                <div id="leads-manual-passo-1" data-nav-title="Pré-requisitos" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-violet-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-violet-500 to-violet-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 1</span>
+                            <span class="text-xs text-gray-400">Preparação</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Certificar Entidades Criadas</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Antes de criar negócios manualmente no funil, certifique-se de que:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>O <strong class="text-white">escritório</strong> já está cadastrado no sistema</li>
+                                <li>Os <strong class="text-white">advogados</strong> vinculados ao escritório estão cadastrados</li>
+                            </ol>
+                            <p class="mt-4">Siga os tutoriais para <a href="#" class="panel-trigger text-blue-400 hover:text-blue-300 underline" data-target="panel-empresa">cadastrar Escritório</a> e <a href="#" class="panel-trigger text-purple-400 hover:text-purple-300 underline" data-target="panel-advogado">Advogados</a> se necessário.</p>
+                        </div>
+                        <div class="bg-violet-500 bg-opacity-10 border border-violet-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-violet-200"><strong>💡 Dica:</strong> Esses cadastros são pré-requisitos essenciais para criar negócios B2B de forma eficiente.</p>
                         </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/leads_manual_passo_1.png" alt="Certificar entidades criadas" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_manual_passo_1.png')">
+                        <img src="img/leads_manual_passo_1.png" alt="Certificar entidades criadas" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/leads_manual_passo_1.png')">
                     </div>
                 </div>
 
                 <!-- Passo 2 -->
-                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 2</span>
-                        <h4 class="text-xl font-semibold text-white">Novo Negócio</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Após criar as entidades, clique no botão "Novo Negócio" no canto superior direito.
-                        </p>
+                <div id="leads-manual-passo-2" data-nav-title="Criar Negócio" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-violet-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-violet-500 to-violet-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 2</span>
+                            <span class="text-xs text-gray-400">Iniciar cadastro</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Criar Novo Negócio</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para iniciar o cadastro manual:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Localize o botão <strong class="text-violet-400">"Novo Negócio"</strong> no <strong class="text-white">canto superior direito</strong></li>
+                                <li>Clique no botão para abrir o formulário de criação</li>
+                            </ol>
+                        </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/leads_manual_passo_2.png" alt="Botão Novo Negócio" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_manual_passo_2.png')">
+                        <img src="img/leads_manual_passo_2.png" alt="Botão Novo Negócio" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/leads_manual_passo_2.png')">
                     </div>
                 </div>
 
                 <!-- Passo 3 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 3</span>
-                        <h4 class="text-xl font-semibold text-white">Preencher Dados do Negócio</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            No menu de criação de negócio:
-                        </p>
-                        <ul class="list-disc list-inside text-gray-300 space-y-1 pl-2 leading-relaxed">
-                            <li>Selecione o estágio onde o negócio será criado.</li>
-                            <li>Preencha o campo <strong>"Cliente"</strong> com o escritório.</li>
-                            <li>O campo <strong>"Contato"</strong> será preenchido com os advogados vinculados ao escritório.</li>
-                            <li>Para alterar o responsável, clique em <strong>"Outras Informações"</strong> e selecione seu usuário.</li>
-                        </ul>
-                        <!-- Dica Especial -->
-                        <div class="bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mt-6">
-                            <p class="text-gray-300 leading-relaxed"><strong class="text-white">Dica:</strong> Certifique-se de que o escritório e advogados estão corretamente vinculados para que os campos sejam preenchidos automaticamente.</p>
+                <div id="leads-manual-passo-3" data-nav-title="Preencher Dados" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-violet-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-violet-500 to-violet-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 3</span>
+                            <span class="text-xs text-gray-400">Configuração</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Preencher Dados do Negócio</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>No formulário de criação:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Selecione o <strong class="text-white">estágio</strong> onde o negócio será criado</li>
+                                <li>Preencha o campo <strong class="text-violet-400">"Cliente"</strong> com o escritório</li>
+                                <li>O campo <strong class="text-violet-400">"Contato"</strong> será preenchido automaticamente com os advogados vinculados</li>
+                                <li>Para alterar o responsável, clique em <strong class="text-white">"Outras Informações"</strong> e selecione seu usuário</li>
+                            </ol>
+                        </div>
+                        <div class="bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-blue-200"><strong>💡 Dica:</strong> Certifique-se de que o escritório e advogados estão corretamente vinculados para que os campos sejam preenchidos automaticamente.</p>
                         </div>
                     </div>
                     <div class="md:w-1/2">
-                        <img src="img/leads_manual_passo_3.png" alt="Menu de criação de negócio" class="rounded-lg shadow-md w-full h-auto object-cover cursor-pointer" onclick="openImageModal('img/leads_manual_passo_3.png')">
+                        <img src="img/leads_manual_passo_3.png" alt="Menu de criação de negócio" class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600" onclick="openImageModal('img/leads_manual_passo_3.png')">
                     </div>
                 </div>
 
                 <!-- Passo 4 -->
-                <div class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div class="md:w-1/2 space-y-3">
-                        <span class="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">Passo 4</span>
-                        <h4 class="text-xl font-semibold text-white">Confirmação</h4>
-                        <p class="text-gray-300 leading-relaxed">
-                            Ao ser criado o negócio, você será redirecionado ao perfil do negócio.
-                        </p>
+                <div id="leads-manual-passo-4" data-nav-title="Confirmar" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-violet-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 4</span>
+                            <span class="text-xs text-gray-400">Conclusão</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Confirmação e Conclusão</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para finalizar:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Revise todas as informações preenchidas</li>
+                                <li>Clique em <strong class="text-emerald-400">"Salvar"</strong> ou <strong class="text-emerald-400">"Criar"</strong></li>
+                                <li>Você será redirecionado automaticamente ao <strong class="text-white">perfil do negócio</strong></li>
+                            </ol>
+                        </div>
+                        <div class="bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-emerald-200"><strong>✅ Sucesso:</strong> Seu negócio B2B foi criado e está pronto para ser trabalhado!</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1001,6 +1786,33 @@
                     }
                 }
             }
+            
+            // Floating Back Button Logic
+            const floatingButtons = document.querySelectorAll('.floating-back-btn');
+            let scrollTimeout;
+            
+            window.addEventListener('scroll', () => {
+                // Debounce scroll events for performance
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const scrollPosition = window.scrollY;
+                    const shouldShow = scrollPosition > 300;
+                    
+                    floatingButtons.forEach(btn => {
+                        // Only show button if its parent panel is visible
+                        const parentPanel = btn.closest('.tab-panel');
+                        if (parentPanel && !parentPanel.classList.contains('hidden')) {
+                            if (shouldShow) {
+                                btn.classList.add('visible');
+                            } else {
+                                btn.classList.remove('visible');
+                            }
+                        } else {
+                            btn.classList.remove('visible');
+                        }
+                    });
+                }, 50);
+            });
 
             // Função de Busca
             if (searchBar) {
