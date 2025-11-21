@@ -6,236 +6,8 @@
     <title>Treinamento Ploomes - CRM</title>
     <!-- Inclusão do Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Fonte Inter - Modern weights */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        /* Root Variables - Enhanced Color Palette */
-        :root {
-            --color-primary: #3b82f6;
-            --color-primary-dark: #2563eb;
-            --color-primary-light: #60a5fa;
-            --color-secondary: #8b5cf6;
-            --color-accent: #06b6d4;
-            --color-success: #10b981;
-            --color-warning: #f59e0b;
-            --bg-dark: #0f172a;
-            --bg-darker: #020617;
-            --bg-card: #1e293b;
-            --bg-card-hover: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
-            min-height: 100vh;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        /* Scroll Offset for Fixed Header */
-        [id] {
-            scroll-margin-top: 130px;
-        }
-        
-        /* Enhanced Image Hover Effects */
-        body:not(.modal-open) img {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: brightness(0.95);
-        }
-        body:not(.modal-open) img:hover {
-            transform: scale(1.05) translateY(-4px);
-            filter: brightness(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-        
-        /* Card Animations */
-        .tutorial-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid transparent;
-        }
-        .tutorial-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--color-primary);
-            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
-        }
-        
-        /* Button Enhancements */
-        .panel-trigger {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        .panel-trigger::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s ease;
-        }
-        .panel-trigger:hover::before {
-            left: 100%;
-        }
-        
-        /* Gradient Headers */
-        .gradient-text {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Step Badge Animations */
-        .step-badge {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .step-badge::after {
-            content: '→';
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            transform: translateX(-10px);
-        }
-        .step-badge:hover::after {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        /* Enhanced Category Headers */
-        .category-header {
-            position: relative;
-            padding-left: 1rem;
-        }
-        .category-header::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
-            border-radius: 2px;
-        }
-        
-        /* Search Bar Enhancement */
-        #search-bar {
-            transition: all 0.3s ease;
-        }
-        #search-bar:focus {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
-        }
-        
-        /* Image Modal Styles */
-        .image-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-        .image-modal.show {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .modal-content {
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
-            animation: zoomIn 0.3s ease;
-        }
-        @keyframes zoomIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .modal-content img {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-        }
-        .close-modal {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            color: white;
-            font-size: 32px;
-            font-weight: bold;
-            cursor: pointer;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 1001;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        .close-modal:hover {
-            transform: rotate(90deg) scale(1.1);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-        }
-        
-        /* Loading Animation for Images */
-        img {
-            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        img[src] {
-            animation: none;
-            background: none;
-        }
-        
-        /* Floating Back Button */
-        .floating-back-btn {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            z-index: 40;
-            opacity: 0;
-            transform: translateX(-100px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        .floating-back-btn.visible {
-            opacity: 1;
-            transform: translateX(0);
-            pointer-events: all;
-        }
-        .floating-back-btn:hover {
-            transform: translateX(0) scale(1.05);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+
 </head>
 <body class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-100 antialiased min-h-screen">
 
@@ -887,10 +659,10 @@
             
             <div class="space-y-8">
                 <!-- Passo 1 -->
-                <div id="rec-passo-1" data-nav-title="Acessar Edição" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-amber-500 transition-all">
+                <div id="rec-passo-1" data-nav-title="Acessar Edição" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-cyan-500 transition-all">
                     <div class="md:w-1/2 space-y-4">
                         <div class="flex items-center gap-3">
-                            <span class="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 1</span>
+                            <span class="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 1</span>
                             <span class="text-xs text-gray-400">Navegação inicial</span>
                         </div>
                         <h4 class="text-2xl font-bold text-white">Acessar Menu de Edição</h4>
@@ -898,8 +670,8 @@
                             <p>Para modificar os dados de um reclamante:</p>
                             <ol class="list-decimal list-inside space-y-2 pl-2">
                                 <li>Acesse o <strong class="text-white">perfil do cliente</strong> que deseja editar</li>
-                                <li>Clique no botão <strong class="text-amber-400">"Opções"</strong> no canto superior</li>
-                                <li>Selecione <strong class="text-amber-400">"Editar Cliente"</strong> no menu dropdown</li>
+                                <li>Clique no botão <strong class="text-cyan-400">"Opções"</strong> no canto superior</li>
+                                <li>Selecione <strong class="text-cyan-400">"Editar Cliente"</strong> no menu dropdown</li>
                             </ol>
                         </div>
                     </div>
@@ -909,10 +681,10 @@
                 </div>
 
                 <!-- Passo 2 -->
-                <div id="rec-passo-2" data-nav-title="Marcador e CPF" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-amber-500 transition-all">
+                <div id="rec-passo-2" data-nav-title="Marcador e CPF" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-cyan-500 transition-all">
                     <div class="md:w-1/2 space-y-4">
                         <div class="flex items-center gap-3">
-                            <span class="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 2</span>
+                            <span class="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 2</span>
                             <span class="text-xs text-gray-400">Verificação de dados</span>
                         </div>
                         <h4 class="text-2xl font-bold text-white">Verificar Marcador e CPF</h4>
@@ -920,15 +692,15 @@
                             <p>No formulário de edição:</p>
                             <div class="space-y-3">
                                 <div class="flex items-start gap-3">
-                                    <svg class="w-5 h-5 text-amber-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <div>
-                                        <strong class="text-white">Marcador:</strong> Confirme que está marcado como <strong class="text-amber-400">"Reclamante"</strong>
+                                        <strong class="text-white">Marcador:</strong> Confirme que está marcado como <strong class="text-cyan-400">"Reclamante"</strong>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-3">
-                                    <svg class="w-5 h-5 text-amber-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <div>
@@ -947,10 +719,10 @@
                 </div>
 
                 <!-- Passo 3 -->
-                <div id="rec-passo-3" data-nav-title="Máscara de Telefone" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-amber-500 transition-all">
+                <div id="rec-passo-3" data-nav-title="Máscara de Telefone" class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-cyan-500 transition-all">
                     <div class="md:w-1/2 space-y-4">
                         <div class="flex items-center gap-3">
-                            <span class="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 3</span>
+                            <span class="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 3</span>
                             <span class="text-xs text-gray-400">Configuração de telefone</span>
                         </div>
                         <h4 class="text-2xl font-bold text-white">Selecionar Máscara do Brasil</h4>
@@ -958,12 +730,12 @@
                             <p>Para configurar o formato correto do telefone:</p>
                             <ol class="list-decimal list-inside space-y-2 pl-2">
                                 <li>Localize a seção <strong class="text-white">"Telefones"</strong></li>
-                                <li>Clique no <strong class="text-amber-400">ícone à esquerda</strong> do campo (geralmente um globo ou bandeira)</li>
-                                <li>Selecione <strong class="text-amber-400">"+55 Brasil"</strong> na lista</li>
+                                <li>Clique no <strong class="text-cyan-400">ícone à esquerda</strong> do campo (geralmente um globo ou bandeira)</li>
+                                <li>Selecione <strong class="text-cyan-400">"+55 Brasil"</strong> na lista</li>
                             </ol>
                         </div>
-                        <div class="bg-amber-500 bg-opacity-10 border border-amber-500 border-opacity-30 rounded-xl p-4 mt-4">
-                            <p class="text-sm text-amber-200"><strong>⚠️ Importante:</strong> A máscara correta permite validação automática do formato.</p>
+                        <div class="bg-cyan-500 bg-opacity-10 border border-cyan-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-cyan-200"><strong>⚠️ Importante:</strong> A máscara correta permite validação automática do formato.</p>
                         </div>
                     </div>
                     <div class="md:w-1/2">
@@ -972,10 +744,10 @@
                 </div>
                 
                 <!-- Passo 4 -->
-                <div id="rec-passo-4" data-nav-title="Gerenciar Telefones" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-amber-500 transition-all">
+                <div id="rec-passo-4" data-nav-title="Gerenciar Telefones" class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-cyan-500 transition-all">
                     <div class="md:w-1/2 space-y-4">
                         <div class="flex items-center gap-3">
-                            <span class="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 4</span>
+                            <span class="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo 4</span>
                             <span class="text-xs text-gray-400">Adicionar/remover números</span>
                         </div>
                         <h4 class="text-2xl font-bold text-white">Gerenciar Números de Telefone</h4>
@@ -999,11 +771,11 @@
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-3">
-                                    <svg class="w-5 h-5 text-amber-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                     <div>
-                                        <strong class="text-white">Formato:</strong> Digite <code class="bg-slate-700 px-2 py-1 rounded text-amber-300">(DDD) XXXXX-XXXX</code>
+                                        <strong class="text-white">Formato:</strong> Digite <code class="bg-slate-700 px-2 py-1 rounded text-cyan-300">(DDD) XXXXX-XXXX</code>
                                     </div>
                                 </div>
                             </div>
