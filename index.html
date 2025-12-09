@@ -272,6 +272,53 @@
         .floating-back-btn:hover {
             transform: translateX(0) scale(1.05);
         }
+
+        /* Home Tab Navigation */
+        .home-tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .home-tab-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #94a3b8;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .home-tab-btn:hover {
+            color: #f1f5f9;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .home-tab-btn.active {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .home-tab-content {
+            display: none;
+        }
+
+        .home-tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
     </style>
 </head>
 
@@ -321,6 +368,29 @@
                     Domine o Ploomes CRM com tutoriais práticos e objetivos
                 </p>
             </div>
+
+            <!-- Home Tab Navigation -->
+            <div class="home-tab-nav max-w-2xl mx-auto">
+                <button class="home-tab-btn active" data-home-tab="tutoriais">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                        </path>
+                    </svg>
+                    Tutoriais
+                </button>
+                <button class="home-tab-btn" data-home-tab="modelos">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                    Modelos de Planilha
+                </button>
+            </div>
+
+            <!-- Tab Content: Tutoriais -->
+            <div id="home-tab-tutoriais" class="home-tab-content active">
 
             <!-- Barra de Busca Aprimorada -->
             <div class="mb-16 max-w-3xl mx-auto">
@@ -787,6 +857,111 @@
 
             <!-- Seção de Categoria: Boas práticas Jestor -->
 
+            </div>
+            <!-- End Tab Content: Tutoriais -->
+
+            <!-- Tab Content: Modelos de Planilha -->
+            <div id="home-tab-modelos" class="home-tab-content">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-white mb-4">Modelos de Planilha</h3>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Baixe os modelos oficiais de planilhas para importação e gestão de dados no Ploomes.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Card: Modelo de Importação -->
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-green-500 transition-all hover:transform hover:-translate-y-2">
+                        <div class="p-6 flex-grow">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-green-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <span class="px-3 py-1 bg-green-500 bg-opacity-20 text-green-300 text-xs font-semibold rounded-full">Excel</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Modelo de Importação</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+                                Planilha padrão para importação de leads e enriquecimento de dados via Jestor.
+                            </p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                </svg>
+                                .xlsx
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="res/modelo_importação.xlsx" download
+                                class="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full transition-all duration-300 shadow-lg hover:shadow-green-500/50">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                                Baixar Modelo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card: Modelo Leads B2B -->
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-indigo-500 transition-all hover:transform hover:-translate-y-2">
+                        <div class="p-6 flex-grow">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-indigo-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <span class="px-3 py-1 bg-indigo-500 bg-opacity-20 text-indigo-300 text-xs font-semibold rounded-full">Excel</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Modelo Leads B2B</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+                                Planilha padrão para cadastro e importação de leads B2B no funil de negócios.
+                            </p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                </svg>
+                                .xlsx
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="res/modelo_leads_b2b.xlsx" download
+                                class="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full transition-all duration-300 shadow-lg hover:shadow-indigo-500/50">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                                Baixar Modelo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Placeholder para futuros modelos -->
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-dashed border-slate-600 opacity-60">
+                        <div class="p-6 flex-grow flex flex-col items-center justify-center text-center">
+                            <div class="p-4 bg-slate-700 bg-opacity-30 rounded-full mb-4">
+                                <svg class="w-10 h-10 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-semibold text-slate-400 mb-2">Em breve</h3>
+                            <p class="text-gray-500 text-sm">Novos modelos serão adicionados aqui.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Tab Content: Modelos de Planilha -->
 
         </section>
 
@@ -2902,6 +3077,27 @@
                         }
                     });
                 }, 50);
+            });
+
+            // Home Tab Navigation
+            const homeTabBtns = document.querySelectorAll('.home-tab-btn');
+            const homeTabContents = document.querySelectorAll('.home-tab-content');
+
+            homeTabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-home-tab');
+
+                    // Remove active class from all buttons and contents
+                    homeTabBtns.forEach(b => b.classList.remove('active'));
+                    homeTabContents.forEach(c => c.classList.remove('active'));
+
+                    // Add active class to clicked button and target content
+                    btn.classList.add('active');
+                    const targetContent = document.getElementById(`home-tab-${targetTab}`);
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+                });
             });
 
             // Função de Busca
