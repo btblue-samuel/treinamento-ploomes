@@ -534,6 +534,40 @@
                         </div>
                     </div>
 
+                    <!-- Card 4: Preencher Desembolso Valor e Criar Carta de Proposta -->
+                    <div
+                        class="tutorial-card bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl overflow-hidden flex flex-col border border-slate-700 hover:border-green-500">
+                        <div class="p-6 flex-grow">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-3 bg-green-500 bg-opacity-10 rounded-xl">
+                                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <span
+                                    class="px-3 py-1 bg-green-500 bg-opacity-20 text-green-300 text-xs font-semibold rounded-full">Financeiro</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 leading-tight">Preencher Desembolso Valor e Criar Carta de Proposta</h3>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">Aprenda a preencher o valor de desembolso e gerar uma carta de proposta profissional no sistema.</p>
+                            <div class="flex items-center text-xs text-gray-500 gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                4 passos
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 bg-opacity-50 p-4 mt-auto border-t border-slate-700">
+                            <a href="#"
+                                class="panel-trigger bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-5 rounded-xl text-sm w-full text-center inline-block transition-all duration-300 shadow-lg hover:shadow-green-500/50"
+                                data-target="panel-desembolso">
+                                Iniciar Tutorial →
+                            </a>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -3421,6 +3455,124 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Preencher Desembolso Valor e Criar Carta de Proposta -->
+        <section id="panel-desembolso" class="tab-panel mb-16 hidden">
+            <a href="#"
+                class="panel-trigger text-green-400 hover:text-green-300 mb-8 inline-flex items-center gap-2 text-lg font-medium transition-all hover:gap-3"
+                data-target="panel-home">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18">
+                    </path>
+                </svg>
+                Voltar para a Central
+            </a>
+
+            <div class="mb-10">
+                <h3 class="text-4xl font-bold text-white mb-4 flex items-center gap-3">
+                    <svg class="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    Preencher Desembolso Valor e Criar Carta de Proposta
+                </h3>
+                <p class="text-xl text-gray-400">Aprenda a preencher os valores de desembolso e gerar cartas de proposta profissional no sistema.
+                </p>
+            </div>
+
+            <button
+                class="floating-back-btn panel-trigger bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold p-4 rounded-full shadow-2xl"
+                data-target="panel-home" title="Voltar para a Central">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18">
+                    </path>
+                </svg>
+            </button>
+
+             <div class="space-y-8">
+                <div id="desembolso-passo-1" data-nav-title="Preencher Valores"
+                    class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-green-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo
+                                1</span>
+                            <span class="text-xs text-gray-400">Movimentação de Card</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Preencher Valores de Desembolso</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para preencher os valores de desembolso:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Mova o card de <strong class="text-green-400">"Aguardando Retorno"</strong> na visão de kanban ou na visão do card</li>
+                                <li>A Ploomes solicitará o preenchimento dos valores de <strong class="text-green-400">Earnout</strong> e <strong class="text-green-400">Desembolso</strong></li>
+                                <li>Preencha os valores e clique no botão <strong class="text-green-400">"Avançar para a próxima etapa"</strong></li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/desembolso.gif" alt="Preenchendo valores de desembolso"
+                            class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600"
+                            onclick="openImageModal('img/desembolso.gif')">
+                    </div>
+                </div>
+
+                <div id="desembolso-passo-2" data-nav-title="Criar Proposta"
+                    class="flex flex-col md:flex-row-reverse gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-green-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo
+                                2</span>
+                            <span class="text-xs text-gray-400">Geração de Documento</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Criar Carta de Proposta</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>Para criar uma nova proposta:</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>Clique em <strong class="text-green-400">"Proposta"</strong> e em seguida <strong class="text-green-400">"Nova Proposta"</strong></li>
+                                <li>Certifique que o modelo selecionado é o correto, <strong class="text-green-400">"Modelo Proposta BT Blue"</strong></li>
+                                <li>Preencha os valores de <strong class="text-green-400">Earnout</strong>, <strong class="text-green-400">Desembolso</strong> e <strong class="text-green-400">Validade</strong></li>
+                                <li>Após isso clique em <strong class="text-green-400">Salvar</strong>, e a proposta será criada</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/proposta.gif" alt="Criando carta de proposta"
+                            class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600"
+                            onclick="openImageModal('img/proposta.gif')">
+                    </div>
+                </div>
+
+                <div id="desembolso-passo-3" data-nav-title="Confirmação"
+                    class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-emerald-500 transition-all">
+                    <div class="md:w-1/2 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">Passo
+                                3</span>
+                            <span class="text-xs text-gray-400">Finalização</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white">Confirmação</h4>
+                        <div class="space-y-3 text-gray-300 leading-relaxed">
+                            <p>A proposta foi criada com sucesso no sistema.</p>
+                            <p>O documento está pronto para ser enviado ao cliente.</p>
+                        </div>
+                        <div
+                            class="bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-30 rounded-xl p-4 mt-4">
+                            <p class="text-sm text-emerald-200"><strong>✅ Tudo certo:</strong> Sua proposta foi gerada e está disponível para download ou envio.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="img/proposta_passo3.png" alt="Proposta criada com sucesso"
+                            class="rounded-xl shadow-2xl w-full h-auto object-cover cursor-pointer border border-slate-600"
+                            onclick="openImageModal('img/proposta_criada.png')">
+                    </div>
                 </div>
             </div>
         </section>
